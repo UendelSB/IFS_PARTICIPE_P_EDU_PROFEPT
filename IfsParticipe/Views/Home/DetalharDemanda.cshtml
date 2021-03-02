@@ -7,13 +7,24 @@
 <link rel="stylesheet" type="text/css" href="/resources/lib/votacao_files/stacks.css">
 <link rel="stylesheet" type="text/css" href="/resources/lib/votacao_files/primary.css">
 
+<script>
+
+    function exibirFormComentario() {
+
+        $("#comentTable").hide();
+        $("#formComentario").attr('style', 'display:block !important');
+  
+        }
+
+</script>
+
 <main role="main">
 
 
     <section class="container" id="order" style="margin-top: 50px">
 
 
-        <div id="question-header" class="grid sm:fd-column" >
+        <div id="question-header" class="grid sm:fd-column">
             <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a href="/questions/66440274/how-can-i-prevent-accidental-deletion-of-records-in-questdb" class="question-hyperlink">DISPONIBILIZAR DEMANDAS DO PDI DE FORMA ACESSIVEL</a></h3>
         </div>
 
@@ -35,7 +46,7 @@
 
                         </td>
                         <td class="text-left" width="70%" style="padding-bottom: 1em">
-                           
+
                             <div class="card-header">
                                 <dl>
                                     <dd>
@@ -45,14 +56,6 @@
                                     </dd>
                                 </dl>
 
-                                @*<dl>
-            <dt class="subtitle">DISPONIBILIZAR DEMANDAS DO PDI DE FORMA ACESSIVEL  </dt>
-            <dd>
-                Dolor sit amet, consectetur adipisicing elit do eiusmod
-                tempor incididunt dasdasdasjhdkjahsdkjhaskjdhjkahsdkjahksjdhakjshdjkashdkjahskdjhajsdhakjshdkj
-                aosdjlaksjdkjaslkdjaklsjdkajslkdjalksjdlkajsdkj
-            </dd>
-        </dl>*@
                                 <dl class="dlist-inline small ">
                                     <dt>Tipo:</dt>
                                     <dd>Infraestrutura Escolar</dd>
@@ -88,16 +91,12 @@
                         <tr>
                             <th scope="col" width="15%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle;text-align:right">Comentários</th>
                             <th scope="col" width="70%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle">
-
-
-                                <input type="button" value="Novo" style="margin:.7rem!important" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("NovaDemanda", "Home")'" />
-
-
+                                <input type="button" value="Novo" style="margin:.7rem!important" class="btn btn-outline-success my-2 my-sm-0" onclick="exibirFormComentario()" />
                             </th>
                             <th scope="col" width="12%" style="border-bottom: 2px solid #E1E7E3"></th>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody id="comentTable">
 
                         <tr>
                             <td class="text-left" width="15%" style="padding-bottom: 1em">
@@ -134,6 +133,22 @@
                 </table>
             </div> <!-- card.// -->
         </div> <!-- code-wrap.// -->
+
+
+
+        <div id="formComentario" hidden class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Novo Comentário</h4>
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 73px;"></textarea>
+                    </div>
+                    <button class="btn btn-primary btn-block">Enviar</button>
+                    <p class="text-center"><a href='@Url.Action("DetalharDemanda", "Home")' >Cancelar</a></p>
+                </form>
+            </div> <!-- card-body.// -->
+        </div>
+
     </section>
     <br />
     <br />
