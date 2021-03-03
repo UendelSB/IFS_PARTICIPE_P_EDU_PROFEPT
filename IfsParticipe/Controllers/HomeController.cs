@@ -39,16 +39,6 @@ namespace LojaVirtual.Controllers
             return View();
         }
 
-        public IActionResult CadastroPDI()
-        {
-            return View();
-        }
-
-        public ActionResult DetalharDemanda()
-        {
-            return View();
-        }
-
         public IActionResult CarrinhoCompras()
         {
             return View();
