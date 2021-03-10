@@ -24,5 +24,10 @@ namespace IfsParticipe.Controllers
         }
 
 
+        public ActionResult AlterarDemanda()
+        {
+            return View();
+        }
+
     }
 }

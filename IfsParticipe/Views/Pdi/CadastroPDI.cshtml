@@ -1,6 +1,8 @@
 ﻿
+@using IfsParticipe.Models
+@model PDI
+
 @{
-    Layout = "_Layout";
     ViewData["Title"] = "CadastroPDI";
 }
 
@@ -16,41 +18,48 @@
                             <h4 class="card-title mt-2">Novo PDI</h4>
                         </header>
                         <article class="card-body">
-                            <form>
-                                <div class="form-row">
+                            @if (TempData["MSG_E"] != null)
+                            {
+                                <p id="msgerro" class="alert alert-danger">@Html.Raw(TempData["MSG_E"])</p>
+                            }
+          
+             @using (Html.BeginForm(null, null, null, FormMethod.Post, false, new { @action = Url.Action("CadastrarPDI", "Pdi")+"#formulario" }))
+                            {
+
+                                @Html.ValidationSummary()
+
+                                <div class="form-row" id="formulario">
+
                                     <div class="col form-group">
-                                        <label>Início vigência</label>
-                                        <input type="date" class="form-control" placeholder="">
+
+                                        @Html.LabelFor(m => m.DataIniVig)
+                                        @Html.EditorFor(m => m.DataIniVig, new { htmlAttributes = new { @class = "form-control" } })
                                     </div> <!-- form-group end.// -->
                                     <div class="col form-group">
-                                        <label>Fim vigência</label>
-                                        <input type="date" class="form-control" placeholder="">
+                                        @Html.LabelFor(m => m.DataFimVig)
+                                        @Html.EditorFor(m => m.DataFimVig, new { htmlAttributes = new { @class = "form-control" } })
                                     </div> <!-- form-group end.// -->
                                 </div> <!-- form-row end.// -->
                                 <div class="form-group">
-                                    <label>Situação</label>
-                                    <select id="inputState" class="form-control">
-                                        <option selected="">Fechado para Novas Demandas</option>
-                                        <option>Aberto para Novas Demandas</option>
-                                    </select>
-
+                                    @Html.LabelFor(m => m.Situacao)
+                                    @Html.DropDownListFor(m => m.Situacao, Model.SituacaoList, "Selecione", new { @class = "form-control" })
                                 </div> <!-- form-group end.// -->
                                 <div class="form-row">
                                     <div class="col form-group">
-                                        <label>Início Rec. Demandas</label>
-                                        <input type="date" class="form-control" placeholder="">
+                                        @Html.LabelFor(m => m.DataIniRecDem)
+                                        @Html.EditorFor(m => m.DataIniRecDem, new { htmlAttributes = new { @class = "form-control" } })
                                     </div> <!-- form-group end.// -->
                                     <div class="col form-group">
-                                        <label>Fim Rec. Demandas</label>
-                                        <input type="date" class="form-control" placeholder="">
+                                        @Html.LabelFor(m => m.DataFimRecDem)
+                                        @Html.EditorFor(m => m.DataFimRecDem, new { htmlAttributes = new { @class = "form-control" } })
                                     </div> <!-- form-group end.// -->
                                 </div> <!-- form-row end.// -->
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-outline-success btn-block"> Cadastrar </button>
                                 </div> <!-- form-group// -->
+                            }
 
-                            </form>
                         </article> <!-- card-body end .// -->
                         <div class="border-top card-body text-center"> <a href='@Url.Action("Index", "Pdi")'>Cancelar</a></div>
                     </div> <!-- card.// -->

@@ -3,19 +3,76 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using IfsParticipe.Models;
+using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using IfsParticipe.Database;
 
 namespace IfsParticipe.Controllers
 {
     public class PdiController : Controller
     {
+        private IfsParticipeContext banco;
+        public PdiController(IfsParticipeContext bancoContext)
+        {
+            banco = bancoContext;
+        }
+
+
         public IActionResult Index()
         {
             return View();
         }
 
+
         public IActionResult CadastroPDI()
+        {
+            PDI model = new PDI{SituacaoList = BindSituacaoList() };
+
+            return View(model); 
+
+        }
+
+        private List<SelectListItem> BindSituacaoList()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem() { Value = "1", Text = "Aberto para novas demandas" });
+            list.Add(new SelectListItem() { Value = "2", Text = "Fechado para novas demandas" });
+            return list;
+        }
+
+        [HttpPost]
+        public IActionResult CadastrarPDI([FromForm]PDI pdi)
+        {
+            try {
+
+                pdi.SituacaoList = BindSituacaoList();
+
+               if(ModelState.IsValid){
+
+                    banco.PDI.Add(pdi);
+                    banco.SaveChanges();
+                    TempData["MSG_S"] = "PDI cadastrado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+            }
+            catch(Exception e)
+            {
+                TempData["MSG_E"] = "Ops! Tivemos um erro, tente novamente mais tarde!";
+            }
+
+            return View("CadastroPDI", pdi);
+        }
+
+
+        public IActionResult AlterarPDI()
         {
             return View();
         }
+
+
+        
     }
 }

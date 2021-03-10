@@ -78,7 +78,6 @@ C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\o
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Home\CarrinhoCompras.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Home\Contato.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Home\Login.g.cshtml.cs
-C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Produto\Visualizar.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.RazorTargetAssemblyInfo.cache
@@ -91,3 +90,8 @@ C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\o
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Demanda\Index.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Pdi\CadastroPDI.g.cshtml.cs
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Demanda\NovaDemanda.g.cshtml.cs
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Pdi\Index.g.cshtml.cs
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Pdi\AlterarPDI.g.cshtml.cs
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Demanda\AlterarDemanda.g.cshtml.cs
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.Libraries.Lang.Mensagem.resources
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csproj.GenerateResource.cache

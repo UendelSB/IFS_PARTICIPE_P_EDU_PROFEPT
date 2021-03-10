@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Models;
+using IfsParticipe.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LojaVirtual.Controllers
+namespace IfsParticipe.Controllers
 {
     public class ProdutoController : Controller
     {

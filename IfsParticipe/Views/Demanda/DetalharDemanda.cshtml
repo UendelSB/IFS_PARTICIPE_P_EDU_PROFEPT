@@ -1,7 +1,6 @@
 ﻿
 @{
     ViewData["Title"] = "DetalharDemanda";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -36,11 +35,11 @@
                         <td class="text-center" style="padding-bottom: 1em;width:5%;vertical-align:middle">
 
                             <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                <button title="Gostei" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
                                 <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
 
-                                <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                                <button title="Não Gostei" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                             </div>
 
                         </td>
@@ -69,6 +68,18 @@
 
                         <td class="text-center" width="12%" style="padding-bottom: 1em;vertical-align:bottom">
 
+                            <dl class="dlist-inline small">
+                                <dd>
+                                    <a title="Alterar" href='@Url.Action("AlterarDemanda", "Demanda")' class="btn btn-outline-success" data-toggle="tooltip"
+                                       data-original-title="Save to Wishlist"><i class="fa fa-edit"></i></a>
+                                </dd>
+
+                                <dd>
+                                    <a title="Remover" href="" class="btn btn-outline-danger" data-toggle="tooltip"
+                                       data-original-title="Save to Wishlist"><i class="fa fa-eraser"></i></a>
+
+                                </dd>
+                            </dl>
                             <dl class="dlist-inline small">
                                 <dt>Ult. Atualização: </dt>
                                 <dd>01/03/2020</dd>
@@ -101,11 +112,11 @@
                             <td class="text-left" width="15%" style="padding-bottom: 1em">
 
                                 <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                    <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                    <button title="Gostei"   class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
                                     <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
 
-                                    <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                                    <button title="Não Gostei" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                                 </div>
 
                             </td>
@@ -116,6 +127,18 @@
                             </td>
 
                             <td class="text-center" width="12%" style="padding-bottom: 1em;vertical-align:bottom">
+
+                                <dl class="dlist-inline small">
+                                    <dd>
+                                        <a title="Alterar" href="" class="btn btn-outline-success" data-toggle="tooltip"
+                                           data-original-title="Save to Wishlist"><i class="fa fa-edit"></i></a>
+                                    </dd>
+
+                                    <dd>
+                                        <a title="Remover" href="" class="btn btn-outline-danger" data-toggle="tooltip"
+                                           data-original-title="Save to Wishlist"><i class="fa fa-eraser"></i></a>
+                                    </dd>
+                                </dl>
 
                                 <dl class="dlist-inline small">
                                     <dt>Ult. Atualização: </dt>

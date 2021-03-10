@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LojaVirtual.Models
+namespace IfsParticipe.Models
 {
     public class Produto
     {

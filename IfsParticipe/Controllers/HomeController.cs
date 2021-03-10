@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LojaVirtual.Libraries.Email;
-using LojaVirtual.Models;
+using IfsParticipe.Libraries.Email;
+using IfsParticipe.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LojaVirtual.Controllers
+namespace IfsParticipe.Controllers
 {
     public class HomeController : Controller
     {
