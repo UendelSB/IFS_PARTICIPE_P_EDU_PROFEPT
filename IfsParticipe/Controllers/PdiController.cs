@@ -20,12 +20,14 @@ namespace IfsParticipe.Controllers
         }
 
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
 
+        [HttpGet]
         public IActionResult CadastroPDI()
         {
             PDI model = new PDI{SituacaoList = BindSituacaoList() };
@@ -48,6 +50,9 @@ namespace IfsParticipe.Controllers
             try {
 
                 pdi.SituacaoList = BindSituacaoList();
+                pdi.DataCadastro = DateTime.Now;
+                pdi.DataAtualizacao = DateTime.Now;
+                pdi.IdUsuario = 123; 
 
                if(ModelState.IsValid){
 
@@ -63,7 +68,7 @@ namespace IfsParticipe.Controllers
                 TempData["MSG_E"] = "Ops! Tivemos um erro, tente novamente mais tarde!";
             }
 
-            return View("CadastroPDI", pdi);
+            return View(nameof(CadastroPDI), pdi);
         }
 
 

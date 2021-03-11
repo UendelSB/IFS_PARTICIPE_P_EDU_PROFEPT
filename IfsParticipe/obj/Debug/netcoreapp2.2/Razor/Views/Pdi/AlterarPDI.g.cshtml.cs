@@ -13,9 +13,37 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#line 2 "C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\Views\_ViewImports.cshtml"
+using IfsParticipe.Models;
+
+#line default
+#line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"55dc74538d684bb2222baf6ffb80631971fbcff7", @"/Views/Pdi/AlterarPDI.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"00df1ae31e55b786b06c3ce3cbe07b1fe8061a95", @"/Views/_ViewImports.cshtml")]
     public class Views_Pdi_AlterarPDI : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("selected", new global::Microsoft.AspNetCore.Html.HtmlString(""), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        #line hidden
+        #pragma warning disable 0169
+        private string __tagHelperStringValueBuffer;
+        #pragma warning restore 0169
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext __tagHelperExecutionContext;
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperRunner __tagHelperRunner = new global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperRunner();
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperScopeManager __backed__tagHelperScopeManager = null;
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperScopeManager __tagHelperScopeManager
+        {
+            get
+            {
+                if (__backed__tagHelperScopeManager == null)
+                {
+                    __backed__tagHelperScopeManager = new global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperScopeManager(StartTagHelperWritingScope, EndTagHelperWritingScope);
+                }
+                return __backed__tagHelperScopeManager;
+            }
+        }
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper;
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper;
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
@@ -28,7 +56,7 @@ namespace AspNetCore
 
 #line default
 #line hidden
-            BeginContext(48, 2873, true);
+            BeginContext(48, 477, true);
             WriteLiteral(@"
 <main role=""main"">
 
@@ -42,7 +70,12 @@ namespace AspNetCore
                             <h4 class=""card-title mt-2"">Alterar PDI</h4>
                         </header>
                         <article class=""card-body"">
-                            <form>
+                            ");
+            EndContext();
+            BeginContext(525, 2258, false);
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "55dc74538d684bb2222baf6ffb80631971fbcff74522", async() => {
+                BeginContext(531, 974, true);
+                WriteLiteral(@"
                                 <div class=""form-row"">
                                     <div class=""col form-group"">
                                         <label>Início vigência</label>
@@ -50,15 +83,54 @@ namespace AspNetCore
                                     </div> <!-- form-group end.// -->
                                     <div class=""col form-group"">
                                         <label>Fim vigência</label>
-                                        <i");
-            WriteLiteral(@"nput type=""date"" class=""form-control"" placeholder="""">
+                                        <input type=""date"" class=""form-control"" placeholder="""">
                                     </div> <!-- form-group end.// -->
                                 </div> <!-- form-row end.// -->
                                 <div class=""form-group"">
                                     <label>Situação</label>
                                     <select id=""inputState"" class=""form-control"">
-                                        <option selected="""">Fechado para Novas Demandas</option>
-                                        <option>Aberto para Novas Demandas</option>
+                                        ");
+                EndContext();
+                BeginContext(1505, 56, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "55dc74538d684bb2222baf6ffb80631971fbcff75901", async() => {
+                    BeginContext(1525, 27, true);
+                    WriteLiteral("Fechado para Novas Demandas");
+                    EndContext();
+                }
+                );
+                __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
+                __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper);
+                __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_0);
+                await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+                if (!__tagHelperExecutionContext.Output.IsContentModified)
+                {
+                    await __tagHelperExecutionContext.SetOutputContentAsync();
+                }
+                Write(__tagHelperExecutionContext.Output);
+                __tagHelperExecutionContext = __tagHelperScopeManager.End();
+                EndContext();
+                BeginContext(1561, 42, true);
+                WriteLiteral("\r\n                                        ");
+                EndContext();
+                BeginContext(1603, 43, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "55dc74538d684bb2222baf6ffb80631971fbcff77306", async() => {
+                    BeginContext(1611, 26, true);
+                    WriteLiteral("Aberto para Novas Demandas");
+                    EndContext();
+                }
+                );
+                __Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper>();
+                __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_OptionTagHelper);
+                await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+                if (!__tagHelperExecutionContext.Output.IsContentModified)
+                {
+                    await __tagHelperExecutionContext.SetOutputContentAsync();
+                }
+                Write(__tagHelperExecutionContext.Output);
+                __tagHelperExecutionContext = __tagHelperScopeManager.End();
+                EndContext();
+                BeginContext(1646, 1130, true);
+                WriteLiteral(@"
                                     </select>
 
                                 </div> <!-- form-group end.// -->
@@ -66,8 +138,7 @@ namespace AspNetCore
                                     <div class=""col form-group"">
                                         <label>Início Rec. Demandas</label>
                                         <input type=""date"" class=""form-control"" placeholder="""">
-                                    ");
-            WriteLiteral(@"</div> <!-- form-group end.// -->
+                                    </div> <!-- form-group end.// -->
                                     <div class=""col form-group"">
                                         <label>Fim Rec. Demandas</label>
                                         <input type=""date"" class=""form-control"" placeholder="""">
@@ -75,12 +146,25 @@ namespace AspNetCore
                                 </div> <!-- form-row end.// -->
 
                                 <div class=""form-group"">
-                                    <button type=""submit"" class=""btn btn-outline-success btn-block""> Alterar </button>
-                                </div> <!-- form-group// -->
-
-                            </form>
-                        </article> <!-- card-body end .// -->
-                        <div class=""border-top card-body text-center""> <a");
+                                    <button type=""submit"" class=""btn btn-outline-success btn-block""> Alter");
+                WriteLiteral("ar </button>\r\n                                </div> <!-- form-group// -->\r\n\r\n                            ");
+                EndContext();
+            }
+            );
+            __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper>();
+            __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper);
+            __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper>();
+            __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper);
+            await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+            if (!__tagHelperExecutionContext.Output.IsContentModified)
+            {
+                await __tagHelperExecutionContext.SetOutputContentAsync();
+            }
+            Write(__tagHelperExecutionContext.Output);
+            __tagHelperExecutionContext = __tagHelperScopeManager.End();
+            EndContext();
+            BeginContext(2783, 138, true);
+            WriteLiteral("\r\n                        </article> <!-- card-body end .// -->\r\n                        <div class=\"border-top card-body text-center\"> <a");
             EndContext();
             BeginWriteAttribute("href", " href=\'", 2921, "\'", 2955, 1);
 #line 54 "C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\Views\Pdi\AlterarPDI.cshtml"

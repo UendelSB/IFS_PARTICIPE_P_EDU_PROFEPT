@@ -59,7 +59,6 @@ namespace IfsParticipe
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
@@ -67,6 +66,9 @@ namespace IfsParticipe
                     name: "default",
                     template: "{controller=Demanda}/{action=Index}/{id?}");
             });
+
+            app.UseCookiePolicy();
+
         }
     }
 }

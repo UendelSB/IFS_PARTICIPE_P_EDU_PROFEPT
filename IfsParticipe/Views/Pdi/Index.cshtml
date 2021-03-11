@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
+    var msgValid = TempData["MSG_S"];
 }
 
 
@@ -20,9 +21,9 @@
         </h4>
         <div id="code_cart">
 
-            @if (TempData["MSG_S"] != null)
+            @if (msgValid != null)
             {
-                <p id="msgsucesso" class="alert alert-success">@Html.Raw(TempData["MSG_S"])</p>
+                <p id="msgsucesso" class="alert alert-success">@Html.Raw(msgValid)</p>
             }
 
             <div class="card">

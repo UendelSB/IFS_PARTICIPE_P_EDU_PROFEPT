@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using IfsParticipe.Libraries.Lang;
@@ -18,6 +19,7 @@ namespace IfsParticipe.Models
         [Display(Name = "Situação")]
         public int? Situacao { get; set; }
 
+        [NotMapped]
         public List<SelectListItem> SituacaoList { get; set; }
 
         [DataType(DataType.Date)]

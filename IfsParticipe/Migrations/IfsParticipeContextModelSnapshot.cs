@@ -19,6 +19,34 @@ namespace IfsParticipe.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("IfsParticipe.Models.Demanda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Categoria")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DataAtualizacao");
+
+                    b.Property<DateTime>("DataCadastro");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired();
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<int?>("Situacao");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Demanda");
+                });
+
             modelBuilder.Entity("IfsParticipe.Models.PDI", b =>
                 {
                     b.Property<int>("Id")
@@ -29,17 +57,20 @@ namespace IfsParticipe.Migrations
 
                     b.Property<DateTime>("DataCadastro");
 
-                    b.Property<DateTime>("DataFimRecDem");
+                    b.Property<DateTime?>("DataFimRecDem");
 
-                    b.Property<DateTime>("DataFimVig");
+                    b.Property<DateTime?>("DataFimVig")
+                        .IsRequired();
 
-                    b.Property<DateTime>("DataIniRecDem");
+                    b.Property<DateTime?>("DataIniRecDem");
 
-                    b.Property<DateTime>("DataIniVig");
+                    b.Property<DateTime?>("DataIniVig")
+                        .IsRequired();
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("Situacao");
+                    b.Property<int?>("Situacao")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

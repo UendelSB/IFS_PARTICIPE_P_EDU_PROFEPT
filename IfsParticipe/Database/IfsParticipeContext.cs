@@ -17,5 +17,7 @@ namespace IfsParticipe.Database
 
         public DbSet<PDI> PDI { get; set; }
 
+        public DbSet<Demanda> Demanda { get; set; }
+
     }
 }

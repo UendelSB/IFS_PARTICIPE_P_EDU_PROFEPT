@@ -13,9 +13,35 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#line 2 "C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\Views\_ViewImports.cshtml"
+using IfsParticipe.Models;
+
+#line default
+#line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"982a7c966213f423bcc7b5e47701adeb1e421a35", @"/Views/Demanda/DetalharDemanda.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"00df1ae31e55b786b06c3ce3cbe07b1fe8061a95", @"/Views/_ViewImports.cshtml")]
     public class Views_Demanda_DetalharDemanda : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
+        #line hidden
+        #pragma warning disable 0169
+        private string __tagHelperStringValueBuffer;
+        #pragma warning restore 0169
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext __tagHelperExecutionContext;
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperRunner __tagHelperRunner = new global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperRunner();
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperScopeManager __backed__tagHelperScopeManager = null;
+        private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperScopeManager __tagHelperScopeManager
+        {
+            get
+            {
+                if (__backed__tagHelperScopeManager == null)
+                {
+                    __backed__tagHelperScopeManager = new global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperScopeManager(StartTagHelperWritingScope, EndTagHelperWritingScope);
+                }
+                return __backed__tagHelperScopeManager;
+            }
+        }
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper;
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
@@ -109,7 +135,7 @@ WriteAttributeValue("", 3763, Url.Action("AlterarDemanda", "Demanda"), 3763, 40,
 #line default
 #line hidden
             EndWriteAttribute();
-            BeginContext(3804, 5597, true);
+            BeginContext(3804, 5247, true);
             WriteLiteral(@" class=""btn btn-outline-success"" data-toggle=""tooltip""
                                        data-original-title=""Save to Wishlist""><i class=""fa fa-edit""></i></a>
                                 </dd>
@@ -203,25 +229,44 @@ WriteAttributeValue("", 3763, Url.Action("AlterarDemanda", "Demanda"), 3763, 40,
 
 
         <div id=""formComentario"" hidden class=""");
-            WriteLiteral(@"card"">
-            <div class=""card-body"">
-                <h4 class=""card-title mb-4"">Novo Comentário</h4>
-                <form>
+            WriteLiteral("card\">\r\n            <div class=\"card-body\">\r\n                <h4 class=\"card-title mb-4\">Novo Comentário</h4>\r\n                ");
+            EndContext();
+            BeginContext(9051, 441, false);
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "982a7c966213f423bcc7b5e47701adeb1e421a3513609", async() => {
+                BeginContext(9057, 344, true);
+                WriteLiteral(@"
                     <div class=""form-group"">
                         <textarea class=""form-control"" rows=""3"" style=""margin-top: 0px; margin-bottom: 0px; height: 73px;""></textarea>
                     </div>
                     <button class=""btn btn-outline-success btn-block"">Enviar</button>
                     <p class=""text-center""><a");
-            EndContext();
-            BeginWriteAttribute("href", " href=\'", 9401, "\'", 9449, 1);
+                EndContext();
+                BeginWriteAttribute("href", " href=\'", 9401, "\'", 9449, 1);
 #line 169 "C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\Views\Demanda\DetalharDemanda.cshtml"
 WriteAttributeValue("", 9408, Url.Action("DetalharDemanda", "Demanda"), 9408, 41, false);
 
 #line default
 #line hidden
-            EndWriteAttribute();
-            BeginContext(9450, 196, true);
-            WriteLiteral(">Cancelar</a></p>\r\n                </form>\r\n            </div> <!-- card-body.// -->\r\n        </div>\r\n\r\n    </section>\r\n\r\n    <br />\r\n    <br />\r\n    <hr class=\"featurette-divider\">\r\n\r\n</main>\r\n\r\n");
+                EndWriteAttribute();
+                BeginContext(9450, 35, true);
+                WriteLiteral(">Cancelar</a></p>\r\n                ");
+                EndContext();
+            }
+            );
+            __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper>();
+            __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper);
+            __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper>();
+            __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper);
+            await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+            if (!__tagHelperExecutionContext.Output.IsContentModified)
+            {
+                await __tagHelperExecutionContext.SetOutputContentAsync();
+            }
+            Write(__tagHelperExecutionContext.Output);
+            __tagHelperExecutionContext = __tagHelperScopeManager.End();
+            EndContext();
+            BeginContext(9492, 154, true);
+            WriteLiteral("\r\n            </div> <!-- card-body.// -->\r\n        </div>\r\n\r\n    </section>\r\n\r\n    <br />\r\n    <br />\r\n    <hr class=\"featurette-divider\">\r\n\r\n</main>\r\n\r\n");
             EndContext();
         }
         #pragma warning restore 1998

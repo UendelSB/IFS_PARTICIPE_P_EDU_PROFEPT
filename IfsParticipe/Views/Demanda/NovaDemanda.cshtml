@@ -1,4 +1,4 @@
-﻿
+﻿@model Demanda
 @{
     ViewData["Title"] = "NovaDemanda";
 }
@@ -17,31 +17,35 @@
                         </header>
                         <article class="card-body">
 
-                            <form>
-                                <div class="form-row">
+                            @if (TempData["MSG_E"] != null)
+                            {
+                                <p id="msgerro" class="alert alert-danger">@Html.Raw(TempData["MSG_E"])</p>
+                            }
+
+                            @using (Html.BeginForm(null, null, null, FormMethod.Post, false, new { @action = Url.Action("CadastrarDemanda", "Demanda") + "#formulario" }))
+                            {
+
+                                @Html.ValidationSummary()
+                                <div class="form-row" id="formulario">
                                     <div class="col form-group">
-                                        <label>Título</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <label asp-for="Titulo">Título</label>
+                                        <input type="text" asp-for="Titulo" class="form-control" placeholder="">
                                     </div> <!-- form-group end.// -->
                                 </div> <!-- form-row.// -->
                                 <div class="form-group">
-                                    <label>Tipo</label>
-                                    <select class="form-control">
-                                        <option>Selecione</option>
-                                        <option>Infraestrutura e Instalações Escolar</option>
-                                        <option>Pedagógico (cursos, atividades e curriculo)</option>
-                                        <option>Atendimento Escolar</option>
-                                    </select>
+                                    <label asp-for="Categoria">Catagoria</label>
+                                    @Html.DropDownListFor(m => m.Categoria, Model.CategoriaList, "Selecione", new { @class = "form-control" })
+
                                 </div>
                                 <div class="form-group">
-                                    <label>Descrição</label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <label asp-for="Descricao">Descrição</label>
+                                    <textarea class="form-control" asp-for="Descricao" rows="3"></textarea>
                                 </div>
-                                <button class="btn btn-outline-success btn-block">Enviar</button>
-                            </form>
+                                <button type="submit" class="btn btn-outline-success btn-block">Enviar</button>
+                            }
 
 
-                        </article> <!-- card-body end .// -->
+                            </article> <!-- card-body end .// -->
                         <div class="border-top card-body text-center"> <a href='@Url.Action("Index", "Demanda")'>Cancelar</a></div>
                     </div> <!-- card.// -->
 
