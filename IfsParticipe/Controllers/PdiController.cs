@@ -8,15 +8,17 @@ using IfsParticipe.Models;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using IfsParticipe.Database;
+using IfsParticipe.Repositories;
 
 namespace IfsParticipe.Controllers
 {
     public class PdiController : Controller
     {
-        private IfsParticipeContext banco;
-        public PdiController(IfsParticipeContext bancoContext)
+        private IPdiRepository _repository;
+
+        public PdiController(IPdiRepository repository)
         {
-            banco = bancoContext;
+            _repository = repository;
         }
 
 
@@ -56,8 +58,7 @@ namespace IfsParticipe.Controllers
 
                if(ModelState.IsValid){
 
-                    banco.PDI.Add(pdi);
-                    banco.SaveChanges();
+                    _repository.Cadastrar(pdi);
                     TempData["MSG_S"] = "PDI cadastrado com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
