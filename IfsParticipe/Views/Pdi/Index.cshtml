@@ -1,15 +1,26 @@
-﻿
+﻿@model List<PDI>
 @{
     ViewData["Title"] = "Index";
-    var msgValid = TempData["MSG_S"];
+    var msgValidS = TempData["MSG_S"];
+    var msgValidE = TempData["MSG_E"];
 }
+
 
 
 
 <main role="main">
 
-
     <section class="container" id="order" style="margin-top: 50px">
+        @if (msgValidS != null)
+        {
+            <p id="msgsucesso" class="alert alert-success">@Html.Raw(msgValidS)</p>
+        }
+
+        @if (msgValidE != null)
+        {
+            <p id="msgerro" class="alert alert-danger">@Html.Raw(msgValidE)</p>
+        }
+
 
         <h2 class="title-doc">Plano de Desenvolvimento Institucional - PDI </h2>
 
@@ -21,61 +32,76 @@
         </h4>
         <div id="code_cart">
 
-            @if (msgValid != null)
-            {
-                <p id="msgsucesso" class="alert alert-success">@Html.Raw(msgValid)</p>
-            }
+
 
             <div class="card">
 
                 <table class="table-responsive-sm table-hover shopping-cart-wrap">
 
                     <tbody>
+                        @foreach (var itemPdi in Model)
+                        {
+                            <tr>
+                                <td style="width:10%"></td>
+                                <td class="text-left" style="padding-bottom: 1em;width:80%;vertical-align:middle">
 
-                        <tr>
-                            <td style="width:10%"></td>
-                            <td class="text-left" style="padding-bottom: 1em;width:80%;vertical-align:middle">
+                                    @*<a href='@Url.Action("AlterarPDI", "Pdi")' class="question-hyperlink" style="color:#007bff">PDI IFS 2020-2024</a>*@
 
-                                @*<a href='@Url.Action("AlterarPDI", "Pdi")' class="question-hyperlink" style="color:#007bff">PDI IFS 2020-2024</a>*@
+                                    <dl class="dlist-inline " style="margin-top:7px">
+                                        <dd>
+                                            <h2>
+                                                PDI IFS @(String.Format("{0} {1} {2}", itemPdi.DataIniVig == null ? "-" : itemPdi.DataIniVig.Value.ToString("yyyy"), " - ", itemPdi.DataFimVig == null ? " a " : itemPdi.DataFimVig.Value.ToString("yyyy")))
+                                            </h2>
+                                        </dd>
+                                    </dl>
 
-                                <dl class="dlist-inline " style="margin-top:7px">
-                                    <dd><h2>PDI IFS 2020-2024</h2></dd>
-                                </dl>
 
+                                    <dl class="dlist-inline small">
+                                        <dt>Vigência: </dt>
+                                        <dd>
+                                            @(String.Format("{0} {1} {2}", itemPdi.DataIniVig == null ? "-" : itemPdi.DataIniVig.Value.ToString("dd/MM/yyyy"), " - ", itemPdi.DataFimVig == null ? "-" : itemPdi.DataFimVig.Value.ToString("dd/MM/yyyy")))
+                                        </dd>
+                                    </dl>
 
-                                <dl class="dlist-inline small">
-                                    <dt>Vigência: </dt>
-                                    <dd>01/10/2020 a 01/10/2024</dd>
-                                </dl>
+                                    <dl class="dlist-inline small">
+                                        <dt>Situação: </dt>
+                                        <dd>@(itemPdi.SituacaoList.Where(p => p.Value == itemPdi.Situacao.ToString()).First().Text) </dd>
+                                    </dl>
 
-                                <dl class="dlist-inline small">
-                                    <dt>Situação: </dt>
-                                    <dd>Fechado para Novas Demandas</dd>
-                                </dl>
+                                    <dl class="dlist-inline small">
+                                        <dt>Período Rec. Demandas:</dt>
+                                        <dd>
 
-                                <dl class="dlist-inline small">
-                                    <dt>Período Rec. Demandas:</dt>
-                                    <dd>01/11/2020 a 01/12/2020</dd>
-                                </dl>
+                                            @(String.Format("{0} {1} {2}", itemPdi.DataIniRecDem == null ? "-" : itemPdi.DataIniRecDem.Value.ToString("dd/MM/yyyy"), itemPdi.DataIniRecDem == null && itemPdi.DataFimRecDem == null ? "-" : " a ", itemPdi.DataFimRecDem == null ? "-" : itemPdi.DataFimRecDem.Value.ToString("dd/MM/yyyy")))
 
-                            </td>
+                                        </dd>
+                                    </dl>
 
-                            <td class="text-center" style="padding-bottom: 1em;width:20%;vertical-align:middle">
+                                    <dl class="dlist-inline small">
+                                        <dt>Ult. Atualização:</dt>
+                                        <dd>
+                                            @(itemPdi.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))
+                                        </dd>
+                                    </dl>
 
-                                <dl class="dlist-inline small">
-                                    <dd>
-                                        <a title="Alterar" href='@Url.Action("AlterarPDI", "Pdi")' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                    </dd>
+                                </td>
 
-                                    <dd>
-                                        <a title="Remover" href="" class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
-                                    </dd>
-                                </dl>
+                                <td class="text-center" style="padding-bottom: 1em;width:20%;vertical-align:middle">
 
-                            </td>
+                                    <dl class="dlist-inline small">
+                                        <dd>
+                                            <a title="Alterar" href='@Url.Action("AlterarPDI", "Pdi",new { id = itemPdi.Id})' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+                                        </dd>
 
-                        </tr>
+                                        <dd>
+                                            <a title="Remover" href='@Url.Action("RemoverPDI", "Pdi",new { id = itemPdi.Id})' class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
+                                        </dd>
+                                    </dl>
 
+                                </td>
+
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div> <!-- card.// -->

@@ -1,6 +1,8 @@
-﻿
+﻿@model IEnumerable<Demanda>
 @{
     ViewData["Title"] = "Index";
+    var msgValidS = TempData["MSG_S"];
+    var msgValidE = TempData["MSG_E"];
 }
 
 
@@ -10,73 +12,85 @@
 
     <section class="container" id="order" style="margin-top: 50px">
 
-        <h2 class="title-doc">Demandas da Comunidade </h2>
+        @if (msgValidS != null)
+        {
+            <p id="msgsucesso" class="alert alert-success">@Html.Raw(msgValidS)</p>
+        }
 
+        @if (msgValidE != null)
+        {
+            <p id="msgerro" class="alert alert-danger">@Html.Raw(msgValidE)</p>
+        }
+
+            <h2 class="title-doc">
+                Demandas da Comunidade - PDI IFS VIGENTE
+
+                    @if (Model != null) {
+                        @(String.Format("{0} {1} {2}", Model.FirstOrDefault().Pdi.DataIniVig == null ? "-" : Model.FirstOrDefault().Pdi.DataIniVig.Value.ToString("yyyy"), " a ", Model.FirstOrDefault().Pdi.DataFimVig == null ? " - " : Model.FirstOrDefault().Pdi.DataFimVig.Value.ToString("yyyy")))
+                    }
+
+            </h2>
+      
 
         <h4 class="subtitle-doc">
 
             <input type="button" value="Nova Demanda" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("NovaDemanda", "Demanda")'" />
 
         </h4>
+        <br />
         <div id="code_cart">
+
+
+
+
             <div class="card">
                 <table class="table-responsive-sm table-hover shopping-cart-wrap">
 
                     <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var dem in Model)
+                            {
+                                <tr style="border: 1px solid rgba(0,0,0,.125)">
+                                    <td class="text-center" style="padding-bottom: 1em;width:17%;vertical-align:middle">
 
-                        <tr>
-                            <td class="text-center" style="padding-bottom: 1em;width:17%;vertical-align:bottom">
+                                        <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
 
-                                <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
+                                            <a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})' class="question-hyperlink" style="font-size:1.61538462rem !important;color:#007bff">0</a>
+                                            <dl class="dlist-inline small">
+                                                <dt>Votos </dt>
+                                            </dl>
 
-                                    <a href='@Url.Action("DetalharDemanda", "Demanda")' class="question-hyperlink" style="font-size:1.61538462rem !important;color:#007bff">0</a>
-                                    <dl class="dlist-inline small">
-                                        <dt>Votos </dt>
-                                    </dl>
+                                            <br />
+                                            <dl class="dlist-inline small">
+                                            <dd><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})'><i class="far fa-comment"></i> 0  <span class="sr-only">(current)</span></a></dd>
+                                            </dl>
 
-                                </div>
+                                            
 
-                            </td>
-                            <td class="text-left" style="padding-bottom: 1em">
-                                <a href='@Url.Action("DetalharDemanda", "Demanda")' class="question-hyperlink" style="color:#007bff">DISPONIBILIZAR DEMANDAS DO PDI DE FORMA ACESSIVEL E TRANSPARENTE</a>
-                                <dl class="dlist-inline small">
-                                    <dt>Tipo Demanda: </dt>
-                                    <dd>Infraestrutura</dd>
-                                </dl>
-                                <dl class="dlist-inline small">
-                                    <dt>Ultima Atualização: </dt>
-                                    <dd>01/03/2020</dd>
-                                </dl>
+                                        </div>
 
-                            </td>
-                        </tr>
+                                    </td>
+                                    <td class="text-left" style="padding-bottom: 1em">
+                                        <a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})' class="question-hyperlink" style="color:#007bff"> @dem.Titulo</a>
+                                        <dl class="dlist-inline small" style="margin-top:5px">
+                                            <dt>Tipo Demanda: </dt>
+                                            <dd>@(dem.CategoriaList.Where(p => p.Value == dem.Categoria.ToString()).First().Text) </dd>
+                                        </dl>
+                                        <dl class="dlist-inline small">
+                                            <dt>Situação Atual: </dt>
+                                            <dd>@(dem.SituacaoList.Where(p => p.Value == dem.Situacao.ToString()).First().Text) </dd>
+                                        </dl>
+                                        <dl class="dlist-inline small">
+                                            <dt>Ultima Atualização: </dt>
+                                            <dd>  @(dem.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))</dd>
+                                        </dl>
+                                    </td>
+                                </tr>
 
-                        <tr>
-                            <td class="text-center" style="padding-bottom: 1em;width:17%;vertical-align:bottom">
+                            }
+                        }
 
-                                <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-
-                                    <a href='@Url.Action("DetalharDemanda", "Demanda")' class="question-hyperlink" style="font-size:1.61538462rem !important;color:#007bff">0</a>
-                                    <dl class="dlist-inline small">
-                                        <dt>Votos </dt>
-                                    </dl>
-
-                                </div>
-
-                            </td>
-                            <td class="text-left" style="padding-bottom: 1em">
-                                <a href='@Url.Action("DetalharDemanda", "Demanda")' class="question-hyperlink" style="color:#007bff">DISPONIBILIZAR DEMANDAS DO PDI DE FORMA ACESSIVEL E TRANSPARENTE</a>
-                                <dl class="dlist-inline small">
-                                    <dt>Tipo Demanda: </dt>
-                                    <dd>Infraestrutura</dd>
-                                </dl>
-                                <dl class="dlist-inline small">
-                                    <dt>Ultima Atualização: </dt>
-                                    <dd>01/03/2020</dd>
-                                </dl>
-
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div> <!-- card.// -->

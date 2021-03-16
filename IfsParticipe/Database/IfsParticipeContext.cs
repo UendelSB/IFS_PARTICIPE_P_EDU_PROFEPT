@@ -19,5 +19,9 @@ namespace IfsParticipe.Database
 
         public DbSet<Demanda> Demanda { get; set; }
 
+        public DbSet<Comentario> Comentario { get; set; }
+
+        public DbSet<Avaliacao> Avaliacao { get; set; }
+
     }
 }

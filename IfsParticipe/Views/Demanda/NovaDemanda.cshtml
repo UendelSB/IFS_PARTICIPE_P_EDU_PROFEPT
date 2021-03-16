@@ -6,7 +6,11 @@
 
 <main role="main">
 
-    <section class="container" style="margin-top: 50px">
+    <section id="formulario" class="container" style="margin-top: 50px">
+        @if (TempData["MSG_E"] != null)
+        {
+            <p id="msgerro" class="alert alert-danger">@Html.Raw(TempData["MSG_E"])</p>
+        }
         <div class="row">
             <aside class="col-sm-6">
 
@@ -17,16 +21,15 @@
                         </header>
                         <article class="card-body">
 
-                            @if (TempData["MSG_E"] != null)
-                            {
-                                <p id="msgerro" class="alert alert-danger">@Html.Raw(TempData["MSG_E"])</p>
-                            }
+
 
                             @using (Html.BeginForm(null, null, null, FormMethod.Post, false, new { @action = Url.Action("CadastrarDemanda", "Demanda") + "#formulario" }))
                             {
 
                                 @Html.ValidationSummary()
-                                <div class="form-row" id="formulario">
+                                <input type="hidden" asp-for="IdPDI" />
+                                <input type="hidden" asp-for="Situacao" />
+                                <div class="form-row">
                                     <div class="col form-group">
                                         <label asp-for="Titulo">Título</label>
                                         <input type="text" asp-for="Titulo" class="form-control" placeholder="">
@@ -45,7 +48,7 @@
                             }
 
 
-                            </article> <!-- card-body end .// -->
+                        </article> <!-- card-body end .// -->
                         <div class="border-top card-body text-center"> <a href='@Url.Action("Index", "Demanda")'>Cancelar</a></div>
                     </div> <!-- card.// -->
 

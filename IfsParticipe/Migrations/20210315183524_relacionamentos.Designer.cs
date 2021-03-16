@@ -4,49 +4,22 @@ using IfsParticipe.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IfsParticipe.Migrations
 {
     [DbContext(typeof(IfsParticipeContext))]
-    partial class IfsParticipeContextModelSnapshot : ModelSnapshot
+    [Migration("20210315183524_relacionamentos")]
+    partial class relacionamentos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("IfsParticipe.Models.Avaliacao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataAtualizacao");
-
-                    b.Property<int?>("IdComentario");
-
-                    b.Property<int?>("IdDemanda");
-
-                    b.Property<int>("IdUsuario");
-
-                    b.Property<int>("Nota");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdComentario");
-
-                    b.HasIndex("IdDemanda");
-
-                    b.ToTable("Avaliacao");
-                });
 
             modelBuilder.Entity("IfsParticipe.Models.Comentario", b =>
                 {
@@ -88,6 +61,8 @@ namespace IfsParticipe.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired();
 
+                    b.Property<int?>("IdDemanda");
+
                     b.Property<int>("IdPDI");
 
                     b.Property<int>("IdUsuario");
@@ -99,7 +74,7 @@ namespace IfsParticipe.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPDI");
+                    b.HasIndex("IdDemanda");
 
                     b.ToTable("Demanda");
                 });
@@ -134,17 +109,6 @@ namespace IfsParticipe.Migrations
                     b.ToTable("PDI");
                 });
 
-            modelBuilder.Entity("IfsParticipe.Models.Avaliacao", b =>
-                {
-                    b.HasOne("IfsParticipe.Models.Comentario", "ComentarioPDI")
-                        .WithMany()
-                        .HasForeignKey("IdComentario");
-
-                    b.HasOne("IfsParticipe.Models.Demanda", "DemandaPDI")
-                        .WithMany()
-                        .HasForeignKey("IdDemanda");
-                });
-
             modelBuilder.Entity("IfsParticipe.Models.Comentario", b =>
                 {
                     b.HasOne("IfsParticipe.Models.Demanda", "DemandaPDI")
@@ -157,8 +121,7 @@ namespace IfsParticipe.Migrations
                 {
                     b.HasOne("IfsParticipe.Models.PDI", "Pdi")
                         .WithMany()
-                        .HasForeignKey("IdPDI")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IdDemanda");
                 });
 #pragma warning restore 612, 618
         }

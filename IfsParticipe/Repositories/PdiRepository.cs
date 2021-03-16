@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IfsParticipe.Database;
 using IfsParticipe.Models;
+using IfsParticipe.Repositories.Interfaces;
 
 namespace IfsParticipe.Repositories
 {
@@ -18,7 +19,8 @@ namespace IfsParticipe.Repositories
 
         public void Atualizar(PDI pdi)
         {
-            throw new NotImplementedException();
+            _banco.PDI.Update(pdi);
+            _banco.SaveChanges();
         }
 
         public void Cadastrar(PDI pdi)
@@ -38,7 +40,7 @@ namespace IfsParticipe.Repositories
           return _banco.PDI.Find(Id);
         }
 
-        public List<PDI> ObterTodosPDIs()
+        public IEnumerable<PDI> ObterTodosPDIs()
         {
            return _banco.PDI.ToList();
         }

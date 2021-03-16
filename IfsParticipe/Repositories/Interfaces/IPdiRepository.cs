@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IfsParticipe.Repositories
+namespace IfsParticipe.Repositories.Interfaces
 {
     public interface IPdiRepository
     {
@@ -13,7 +13,7 @@ namespace IfsParticipe.Repositories
         void Atualizar(PDI pdi);
         void Excluir(int Id);
         PDI  ObterPDI(int Id);
-        List<PDI> ObterTodosPDIs();
+        IEnumerable<PDI> ObterTodosPDIs();
 
     }
 }

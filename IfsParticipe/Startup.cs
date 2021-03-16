@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using IfsParticipe.Repositories;
+using IfsParticipe.Repositories.Interfaces;
 
 namespace IfsParticipe
 {
@@ -30,6 +31,9 @@ namespace IfsParticipe
         {
 
             services.AddScoped<IPdiRepository, PdiRepository>();
+            services.AddScoped<IDemandaRepository, DemandaRepository>();
+            services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
+            services.AddScoped<IComentarioRepository, ComentarioRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

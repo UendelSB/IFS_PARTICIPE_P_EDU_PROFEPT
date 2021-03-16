@@ -66,7 +66,6 @@ C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\b
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\bin\Debug\netcoreapp2.2\IfsParticipe.pdb
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\bin\Debug\netcoreapp2.2\IfsParticipe.Views.dll
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\bin\Debug\netcoreapp2.2\IfsParticipe.Views.pdb
-C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csprojAssemblyReference.cache
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csproj.CoreCompileInputs.cache
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.RazorAssemblyInfo.cache
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.RazorAssemblyInfo.cs
@@ -96,3 +95,4 @@ C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\o
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.Libraries.Lang.Mensagem.resources
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csproj.GenerateResource.cache
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csprojAssemblyReference.cache

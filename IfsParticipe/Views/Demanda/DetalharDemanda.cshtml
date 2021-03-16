@@ -1,32 +1,46 @@
-﻿
+﻿@model DetalheDemandaViewModel
+
 @{
     ViewData["Title"] = "DetalharDemanda";
+    var msgValidS = TempData["MSG_S"];
+    var msgValidE = TempData["MSG_E"];
+    bool existComentario = Model.Comentario is null;
 }
 
 
-
-<script>
+<script type="text/javascript">
 
     function exibirFormComentario() {
 
         $("#comentTable").hide();
         $("#formComentario").attr('style', 'display:block !important');
-  
-        }
+
+    }
 
 </script>
+
+
 
 <main role="main">
 
 
     <section class="container" id="order" style="margin-top: 50px">
+        @if (msgValidS != null)
+        {
+            <p id="msgsucesso" class="alert alert-success">@Html.Raw(msgValidS)</p>
+        }
 
+        @if (msgValidE != null)
+        {
+            <p id="msgerro" class="alert alert-danger">@Html.Raw(msgValidE)</p>
+        }
 
         <div id="question-header" class="grid sm:fd-column">
-            <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a href="/questions/66440274/how-can-i-prevent-accidental-deletion-of-records-in-questdb" class="question-hyperlink">DISPONIBILIZAR DEMANDAS DO PDI DE FORMA ACESSIVEL</a></h3>
+            <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = Model.Demanda.Id })' class="question-hyperlink">@Model.Demanda.Titulo</a></h3>
         </div>
 
         <div class="card">
+            <input type="hidden" asp-for="Demanda.Id" />
             <table class="table-responsive-sm table-hover shopping-cart-wrap">
 
                 <tbody>
@@ -49,18 +63,18 @@
                                 <dl>
                                     <dd>
                                         <div class="s-prose js-post-body" itemprop="text">
-                                            <p>I think what you're trying to do is wrap loooooooooooooong words or URLs so they don't push the size of the table out.  (I've just been trying to do the same thing!)</p>
+                                            <p>@Model.Demanda.Descricao</p>
                                         </div>
                                     </dd>
                                 </dl>
 
                                 <dl class="dlist-inline small ">
                                     <dt>Tipo:</dt>
-                                    <dd>Infraestrutura Escolar</dd>
+                                    <dd>@(Model.Demanda.CategoriaList.Where(p => p.Value == Model.Demanda.Categoria.ToString()).First().Text) </dd>
                                 </dl>
                                 <dl class="dlist-inline small">
                                     <dt>Situação: </dt>
-                                    <dd>Enviada para Análise</dd>
+                                    <dd>@(Model.Demanda.SituacaoList.Where(p => p.Value == Model.Demanda.Situacao.ToString()).First().Text) </dd>
                                 </dl>
                             </div> <!-- box.// -->
 
@@ -70,19 +84,17 @@
 
                             <dl class="dlist-inline small">
                                 <dd>
-                                    <a title="Alterar" href='@Url.Action("AlterarDemanda", "Demanda")' class="btn btn-outline-success" data-toggle="tooltip"
-                                       data-original-title="Save to Wishlist"><i class="fa fa-edit"></i></a>
+                                    <a title="Alterar" href='@Url.Action("AlterarDemanda", "Demanda",new { id = Model.Demanda.Id})' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
                                 </dd>
 
                                 <dd>
-                                    <a title="Remover" href="" class="btn btn-outline-danger" data-toggle="tooltip"
-                                       data-original-title="Save to Wishlist"><i class="fa fa-eraser"></i></a>
+                                    <a title="Remover" href='@Url.Action("RemoverDemanda", "Demanda",new { id = Model.Demanda.Id})' class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
 
                                 </dd>
                             </dl>
                             <dl class="dlist-inline small">
                                 <dt>Ult. Atualização: </dt>
-                                <dd>01/03/2020</dd>
+                                <dd> @(Model.Demanda.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))</dd>
                             </dl>
 
                         </td>
@@ -106,13 +118,13 @@
                             <th scope="col" width="12%" style="border-bottom: 2px solid #E1E7E3"></th>
                         </tr>
                     </thead>
-                    <tbody id="comentTable">
+                    <tbody id="comentTable" @(Model.Comentario == null ? " " : "hidden") >
 
                         <tr>
                             <td class="text-left" width="15%" style="padding-bottom: 1em">
 
                                 <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                    <button title="Gostei"   class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                    <button title="Gostei" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
                                     <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
 
@@ -158,16 +170,28 @@
 
 
 
-        <div id="formComentario" hidden class="card">
+        <div id="formComentario"  @(Model.Comentario == null ? "hidden" : " ") class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Novo Comentário</h4>
-                <form>
+                @using (Html.BeginForm(null, null, null, FormMethod.Post, false, new { @action = Url.Action("CadastrarComentario", "Demanda") + "#formulario" }))
+                {
+                    <input type="hidden" value="@Model.Demanda.Id"  asp-for="Comentario.IdDemanda" />
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 73px;"></textarea>
+                        <textarea asp-for="Comentario.Descricao" class="form-control" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 73px;"></textarea>
                     </div>
-                    <button class="btn btn-outline-success btn-block">Enviar</button>
-                    <p class="text-center"><a href='@Url.Action("DetalharDemanda", "Demanda")'>Cancelar</a></p>
-                </form>
+
+                    @if (Model.Comentario != null)
+                    {
+                    <div  class="validation-summary-errors" data-valmsg-summary="true">
+                        <ul>
+                            <li>Campo comentário é obrigatório!</li>
+                        </ul>
+                    </div>
+                    }
+
+                    <button type="submit" class="btn btn-outline-success btn-block">Enviar</button>
+                    <p class="text-center"><a href='@Url.Action("DetalharDemanda", "Demanda", new { id = Model.Demanda.Id })'>Cancelar</a></p>
+                }
             </div> <!-- card-body.// -->
         </div>
 
