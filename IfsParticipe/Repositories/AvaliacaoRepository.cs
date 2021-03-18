@@ -25,8 +25,20 @@ namespace IfsParticipe.Repositories
 
         public void Cadastrar(Avaliacao avaliacao)
         {
-            _banco.Avaliacao.Add(avaliacao);
-            _banco.SaveChanges();
+            //verificar se ja existe para fazer apenas a atualizacao da noda do comentatio ou da demanda
+            Avaliacao avTemp =  ObterTodasAvaliacoes().Where(m => (m.Tipo == avaliacao.Tipo) && (m.IdDemanda == avaliacao.IdDemanda || m.IdComentario == avaliacao.IdComentario) && m.IdUsuario == avaliacao.IdUsuario ).FirstOrDefault();
+
+            if(avTemp != null)
+            {
+                avTemp.DataAtualizacao = avaliacao.DataAtualizacao;
+                avTemp.Nota = avaliacao.Nota;
+                Atualizar(avTemp);
+            }
+            else
+            {
+             _banco.Avaliacao.Add(avaliacao);
+              _banco.SaveChanges();
+            }
         }
 
         public Avaliacao ObterAvaliacao(int Id)

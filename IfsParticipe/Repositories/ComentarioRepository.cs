@@ -29,10 +29,13 @@ namespace IfsParticipe.Repositories
             _banco.SaveChanges();
         }
 
-        public void Excluir(int Id)
+        public int Excluir(int Id)
         {
-            _banco.Remove(ObterComentario(Id));
+            Comentario comentario = ObterComentario(Id);
+            int idDemanda = comentario.IdDemanda;
+            _banco.Remove(comentario);
             _banco.SaveChanges();
+            return idDemanda;
         }
 
         public Comentario ObterComentario(int Id)

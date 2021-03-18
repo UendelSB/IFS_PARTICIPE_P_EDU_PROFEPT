@@ -10,6 +10,41 @@
 
 <script type="text/javascript">
 
+
+
+
+    function avaliarDemandaComentario(idDemCom,nota,tipo) {
+
+        var avaliacao = {};
+
+        avaliacao.Tipo = tipo;
+        avaliacao.Nota = nota;
+
+        if (tipo == 'C') {
+            avaliacao.IdComentario = idDemCom;
+        } else if (tipo == 'D') {
+            avaliacao.IdDemanda = idDemCom;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AvaliarDemandaComentario", "Demanda")',
+            data: avaliacao,
+            dataType: "json",
+            processData: true,
+            success: function (response) {
+                alert("Hello: .\nCurrent Date and Time: " + response.DataAtualizacao);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
     function exibirFormComentario() {
 
         $("#comentTable").hide();
@@ -41,19 +76,19 @@
 
         <div class="card">
             <input type="hidden" asp-for="Demanda.Id" />
-            <table class="table-responsive-sm table-hover shopping-cart-wrap">
+            <table class="table-responsive-sm table-hover shopping-cart-wrap" style="table-layout: fixed;word-break: break-word">
 
                 <tbody>
 
-                    <tr>
+                    <tr style="border: 1px solid rgba(0,0,0,.125)" >
                         <td class="text-center" style="padding-bottom: 1em;width:5%;vertical-align:middle">
 
                             <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                <button title="Gostei" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                <button title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,1,'D')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
                                 <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
 
-                                <button title="Não Gostei" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                                <button  title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,-1,'D')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                             </div>
 
                         </td>
@@ -108,9 +143,9 @@
 
         <div id="code_cart">
             <div class="card">
-                <table class="table-responsive-sm table-hover shopping-cart-wrap">
+                <table class="table-responsive-sm table-hover shopping-cart-wrap" style="table-layout: fixed;word-break: break-word">
                     <thead class="text-muted">
-                        <tr>
+                        <tr >
                             <th scope="col" width="15%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle;text-align:right">Comentários</th>
                             <th scope="col" width="70%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle">
                                 <input type="button" value="Novo" style="margin:.7rem!important" class="btn btn-outline-success my-2 my-sm-0" onclick="exibirFormComentario()" />
@@ -118,52 +153,48 @@
                             <th scope="col" width="12%" style="border-bottom: 2px solid #E1E7E3"></th>
                         </tr>
                     </thead>
-                    <tbody id="comentTable" @(Model.Comentario == null ? " " : "hidden") >
+                    <tbody id="comentTable" @(Model.Comentario == null ? " " : "hidden")>
+                        @foreach (var coment in Model.ComentarioList)
+                        {
+                            <tr style="border: 1px solid rgba(0,0,0,.125)">
+                                <td class="text-left" width="15%" style="padding-bottom: 1em">
 
-                        <tr>
-                            <td class="text-left" width="15%" style="padding-bottom: 1em">
+                                    <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
+                                        <button title="Gostei" onclick="avaliarDemandaComentario(@coment.Id,1,'C')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
-                                <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                    <button title="Gostei" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
 
-                                    <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
+                                        <button title="Não Gostei" onclick="avaliarDemandaComentario(@coment.Id,-1,'C')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                                    </div>
 
-                                    <button title="Não Gostei" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
-                                </div>
+                                </td>
+                                <td class="text-left" width="70%" style="padding-bottom: 1em">
+                                    <div class="s-prose js-post-body" itemprop="text">
+                                        <p>@coment.Descricao</p>
+                                    </div>
+                                </td>
 
-                            </td>
-                            <td class="text-left" width="70%" style="padding-bottom: 1em">
-                                <div class="s-prose js-post-body" itemprop="text">
-                                    <p>I think what you're trying to do is wrap loooooooooooooong words or URLs so they don't push the size of the table out.  (I've just been trying to do the same thing!)</p>
-                                </div>
-                            </td>
+                                <td class="text-center" width="12%" style="padding-bottom: 1em;vertical-align:bottom">
 
-                            <td class="text-center" width="12%" style="padding-bottom: 1em;vertical-align:bottom">
+                                    <dl class="dlist-inline small">
+                                        <dd>
+                                            <a title="Remover" href='@Url.Action("RemoverComentario", "Demanda",new { id = coment.Id})' class="btn btn-outline-danger" data-toggle="tooltip"
+                                               data-original-title="Save to Wishlist"><i class="fa fa-eraser"></i></a>
+                                        </dd>
+                                    </dl>
 
-                                <dl class="dlist-inline small">
-                                    <dd>
-                                        <a title="Alterar" href="" class="btn btn-outline-success" data-toggle="tooltip"
-                                           data-original-title="Save to Wishlist"><i class="fa fa-edit"></i></a>
-                                    </dd>
+                                    <dl class="dlist-inline small">
+                                        <dt>Enviado em: &nbsp;</dt>
+                                        @(coment.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))
+                                    </dl>
 
-                                    <dd>
-                                        <a title="Remover" href="" class="btn btn-outline-danger" data-toggle="tooltip"
-                                           data-original-title="Save to Wishlist"><i class="fa fa-eraser"></i></a>
-                                    </dd>
-                                </dl>
-
-                                <dl class="dlist-inline small">
-                                    <dt>Ult. Atualização: </dt>
-                                    <dd>01/03/2020</dd>
-                                </dl>
-
-                            </td>
+                                </td>
 
 
-                        </tr>
+                            </tr>
 
-
-                    </tbody>
+                        }
+                        </tbody>
                 </table>
             </div> <!-- card.// -->
         </div> <!-- code-wrap.// -->

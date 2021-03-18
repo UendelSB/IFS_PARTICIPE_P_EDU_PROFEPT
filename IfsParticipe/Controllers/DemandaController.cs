@@ -16,12 +16,17 @@ namespace IfsParticipe.Controllers
 
         private IDemandaRepository _repositoryDemanda;
         private IPdiRepository _repositoryPdi;
-     
+        private IComentarioRepository _repositoryComentario;
+        private IAvaliacaoRepository _repositoryAvaliacao;
 
-        public DemandaController(IDemandaRepository repositoryDemanda, IPdiRepository repositoryPdi)
+
+
+        public DemandaController(IDemandaRepository repositoryDemanda, IPdiRepository repositoryPdi, IComentarioRepository repositoryComentario, IAvaliacaoRepository repositoryAvaliacao)
         {
             _repositoryDemanda = repositoryDemanda;
             _repositoryPdi = repositoryPdi;
+            _repositoryComentario = repositoryComentario;
+            _repositoryAvaliacao = repositoryAvaliacao;
 
         }
 
@@ -82,6 +87,10 @@ namespace IfsParticipe.Controllers
                     TempData["MSG_E"] = "Ops! Não Localizamos a informação solicitada";
                     return RedirectToAction(nameof(Index));
                 }
+                else
+                {
+                    detalheVM.ComentarioList = _repositoryComentario.ObterTodosComentarios().Where(m => m.IdDemanda == Id).ToList();
+                }
 
             }
             catch (Exception e)
@@ -96,6 +105,7 @@ namespace IfsParticipe.Controllers
             var com = TempData["COMENTARIO"];
             if (com != null)
             detalheVM.Comentario = new Comentario() {IdDemanda =(int)com };
+
             return View(detalheVM);
         }
 
@@ -243,15 +253,14 @@ namespace IfsParticipe.Controllers
 
             try
             {
-                //demanda.CategoriaList = BindCategoriaList();
-                //demanda.SituacaoList = BindSituacaoList();
-                //demanda.DataAtualizacao = DateTime.Now;
-                ////TODO implementar registro usuario
-                //demanda.IdUsuario = 123;
-
+                demandaCom.Comentario.DataAtualizacao = DateTime.Now;
+                demandaCom.Comentario.DataCadastro = DateTime.Now;
+                //TODO implementar usuario
+                demandaCom.Comentario.IdUsuario = 123;
+             
                 if (ModelState.IsValid)
                 {
-                   // _repositoryDemanda.Atualizar(demanda);
+                    _repositoryComentario.Cadastrar(demandaCom.Comentario);
                     TempData["MSG_S"] = "Comentario enviado com sucesso!";
                 }
                 else
@@ -267,6 +276,50 @@ namespace IfsParticipe.Controllers
 
             return RedirectToAction("DetalharDemanda", "Demanda", new { id = demandaCom.Comentario.IdDemanda });
 
+        }
+
+        
+        [HttpGet]
+        public IActionResult RemoverComentario(int Id)
+        {
+            //TODO permitir a exclusao logica para que as demandas nao sejam excluidas
+            Comentario model = new Comentario();
+            try
+            {
+                 model.IdDemanda =  _repositoryComentario.Excluir(Id);
+
+                TempData["MSG_S"] = "Comentario removido com sucesso!";
+            }
+            catch (Exception e)
+            {
+
+                TempData["MSG_E"] = "Ops! Tivemos um erro, tente novamente mais tarde!";
+            }
+
+            return RedirectToAction("DetalharDemanda", "Demanda", new { id = model.IdDemanda });
+
+        }
+
+        [HttpPost]
+        public JsonResult AvaliarDemandaComentario(Avaliacao avaliacao)
+        {
+            try
+            {
+                avaliacao.DataAtualizacao = DateTime.Now;
+                //TODO implementar usuario
+                avaliacao.IdUsuario = 123;
+                _repositoryAvaliacao.Cadastrar(avaliacao);
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            avaliacao.DataAtualizacao = DateTime.Now;
+            //TODO implementar usuario
+            avaliacao.IdUsuario = 123;
+             
+            return Json(avaliacao);
         }
 
 

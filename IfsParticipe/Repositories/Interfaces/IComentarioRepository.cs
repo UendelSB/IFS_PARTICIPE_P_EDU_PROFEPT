@@ -10,7 +10,7 @@ namespace IfsParticipe.Repositories.Interfaces
     {
         void Cadastrar(Comentario comentario);
         void Atualizar(Comentario comentario);
-        void Excluir(int Id);
+        int Excluir(int Id);
         IEnumerable<Comentario> ObterTodosComentarios();
         Comentario ObterComentario(int Id);
     }
