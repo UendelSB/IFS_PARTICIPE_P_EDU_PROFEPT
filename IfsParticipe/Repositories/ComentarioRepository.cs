@@ -32,7 +32,11 @@ namespace IfsParticipe.Repositories
         public int Excluir(int Id)
         {
             Comentario comentario = ObterComentario(Id);
+            List<Avaliacao> avaliacoes = _banco.Avaliacao.Where(a => a.IdComentario == Id).ToList();
+
             int idDemanda = comentario.IdDemanda;
+
+            _banco.RemoveRange(avaliacoes);
             _banco.Remove(comentario);
             _banco.SaveChanges();
             return idDemanda;

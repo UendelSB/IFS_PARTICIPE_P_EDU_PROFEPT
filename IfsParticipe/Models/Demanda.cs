@@ -59,5 +59,14 @@ namespace IfsParticipe.Models
         [NotMapped]
         public List<SelectListItem> CategoriaList { get; set; }
 
+        [NotMapped]
+        public int CountAva { get; set; }
+
+        [NotMapped]
+        public int CountComent { get; set; }
+
+        [NotMapped]
+        public List<Avaliacao> Avaliacoes { get; set; }
+
     }
 }

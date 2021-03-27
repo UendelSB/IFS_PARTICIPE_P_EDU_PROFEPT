@@ -56,14 +56,14 @@
 
                                         <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
 
-                                            <a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})' class="question-hyperlink" style="font-size:1.61538462rem !important;color:#007bff">0</a>
+                                            <a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})' class="question-hyperlink" style="font-size:1.61538462rem !important;color:#007bff">@dem.CountAva</a>
                                             <dl class="dlist-inline small">
                                                 <dt>Votos </dt>
                                             </dl>
 
                                             <br />
                                             <dl class="dlist-inline small">
-                                            <dd><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})'><i class="far fa-comment"></i> 0  <span class="sr-only">(current)</span></a></dd>
+                                            <dd><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})'><i class="far fa-comment"></i> @dem.CountComent <span class="sr-only">(current)</span></a></dd>
                                             </dl>
 
                                             

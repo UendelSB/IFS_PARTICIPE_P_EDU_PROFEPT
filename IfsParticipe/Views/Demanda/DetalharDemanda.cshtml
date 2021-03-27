@@ -13,18 +13,15 @@
 
 
 
-    function avaliarDemandaComentario(idDemCom,nota,tipo) {
+    function avaliarDemandaComentario(idDemanda,idComentario,nota,tipo) {
 
         var avaliacao = {};
 
         avaliacao.Tipo = tipo;
         avaliacao.Nota = nota;
+        avaliacao.IdComentario = idComentario;
+        avaliacao.IdDemanda = @Model.Demanda.Id;
 
-        if (tipo == 'C') {
-            avaliacao.IdComentario = idDemCom;
-        } else if (tipo == 'D') {
-            avaliacao.IdDemanda = idDemCom;
-        }
 
         $.ajax({
             type: "POST",
@@ -33,14 +30,49 @@
             dataType: "json",
             processData: true,
             success: function (response) {
-                alert("Hello: .\nCurrent Date and Time: " + response.DataAtualizacao);
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
+
+                var spanAvaComentPos = $("#avaComentPos" + response.idComentario);
+                var spanAvaComentNeg = $("#avaComentNeg" + response.idComentario);
+
+                var spanAvaDemPos = $("#avaDemPos" + response.idDemanda);
+                var spanAvaDemNeg = $("#avaDemNeg" + response.idDemanda);
+
+                if (response.tipo == 'D') {
+                    spanCountDemCom = $("#count" + response.idDemanda);
+                    spanCountDemCom.text(response.somaNotas);
+
+                    if (response.nota > 0) {
+                        spanAvaDemPos.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:green');
+                        spanAvaDemNeg.hide();
+                    } else {
+                        spanAvaDemPos.hide();
+                        spanAvaDemNeg.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:red');
+                    }
+
+                } else {
+                    spanCountDemCom = $("#count" + response.idComentario);
+                    spanCountDemCom.text(response.somaNotas);
+
+
+                    if (response.nota > 0) {
+               
+                        spanAvaComentPos.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:green');
+                        spanAvaComentNeg.hide();
+
+                    } else {
+                        spanAvaComentPos.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:red');
+                        spanAvaComentNeg.hide();
+                       
+                    }
+                }
             }
+            //,
+            //failure: function (response) {
+            //    window.location.href = response.redirectToUrl;
+            //},
+            //error: function (response) {
+            //    window.location.href = response.redirectToUrl;
+            //}
         });
 
     }
@@ -71,7 +103,7 @@
         }
 
         <div id="question-header" class="grid sm:fd-column">
-            <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = Model.Demanda.Id })' class="question-hyperlink">@Model.Demanda.Titulo</a></h3>
+            <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a  href='@Url.Action("DetalharDemanda", "Demanda",new { id = Model.Demanda.Id })' class="question-hyperlink" style="word-break: break-all">@Model.Demanda.Titulo</a></h3>
         </div>
 
         <div class="card">
@@ -81,18 +113,26 @@
                 <tbody>
 
                     <tr style="border: 1px solid rgba(0,0,0,.125)" >
-                        <td class="text-center" style="padding-bottom: 1em;width:5%;vertical-align:middle">
+                        <td class="text-center" style="padding-bottom: 1em;width:15%;vertical-align:middle">
 
                             <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                <button title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,1,'D')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                <button title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,'',1,'D')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
-                                <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
+                                <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" > <span id="@String.Concat("count",Model.Demanda.Id)"> @Model.Demanda.CountAva</span></div>
 
-                                <button  title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,-1,'D')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                                <button  title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,'',-1,'D')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                             </div>
+                            <dl class="dlist-inline small ">
+                                <dt>Seu Voto</dt>
+                                <dd>
+                                    @*TODO adicionar usuario logado*@ 
+                                    <span id="@String.Concat("avaDemPos",Model.Demanda.Id)" @(Model.Demanda.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota >0  ).FirstOrDefault() == null ? "hidden" : " ")  style="font-family:fantasy;font-size:15px;color:green">+1</span>
+                                    <span id="@String.Concat("avaDemNeg",Model.Demanda.Id)" @(Model.Demanda.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota <0  ).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:red">-1</span> 
+                                </dd>
 
+                            </dl>
                         </td>
-                        <td class="text-left" width="70%" style="padding-bottom: 1em">
+                        <td class="text-left" width="65%" style="padding-bottom: 1em">
 
                             <div class="card-header">
                                 <dl>
@@ -115,7 +155,7 @@
 
                         </td>
 
-                        <td class="text-center" width="12%" style="padding-bottom: 1em;vertical-align:bottom">
+                        <td class="text-center" width="20%" style="padding-bottom: 1em;vertical-align:bottom">
 
                             <dl class="dlist-inline small">
                                 <dd>
@@ -128,7 +168,7 @@
                                 </dd>
                             </dl>
                             <dl class="dlist-inline small">
-                                <dt>Ult. Atualização: </dt>
+                                <dt>Atual. Em: </dt>
                                 <dd> @(Model.Demanda.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))</dd>
                             </dl>
 
@@ -146,35 +186,45 @@
                 <table class="table-responsive-sm table-hover shopping-cart-wrap" style="table-layout: fixed;word-break: break-word">
                     <thead class="text-muted">
                         <tr >
-                            <th scope="col" width="15%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle;text-align:right">Comentários</th>
-                            <th scope="col" width="70%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle">
+                            <th scope="col" width="15%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle;text-align:right;word-break: normal">Comentários</th>
+                            <th scope="col" width="55%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle">
                                 <input type="button" value="Novo" style="margin:.7rem!important" class="btn btn-outline-success my-2 my-sm-0" onclick="exibirFormComentario()" />
                             </th>
-                            <th scope="col" width="12%" style="border-bottom: 2px solid #E1E7E3"></th>
+                            <th scope="col" width="30%" style="border-bottom: 2px solid #E1E7E3"></th>
                         </tr>
                     </thead>
                     <tbody id="comentTable" @(Model.Comentario == null ? " " : "hidden")>
                         @foreach (var coment in Model.ComentarioList)
                         {
-                            <tr style="border: 1px solid rgba(0,0,0,.125)">
-                                <td class="text-left" width="15%" style="padding-bottom: 1em">
+                            <tr id="@coment.Id" style="border: 1px solid rgba(0,0,0,.125)">
+                                <td class="text-center" width="15%" style="padding-bottom: 1em">
 
                                     <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                        <button title="Gostei" onclick="avaliarDemandaComentario(@coment.Id,1,'C')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                                        <button title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,@coment.Id,1,'C')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
-                                        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="0">0</div>
+                                        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount"><span id="@String.Concat("count",coment.Id)">  @coment.CountAva</span></div>
 
-                                        <button title="Não Gostei" onclick="avaliarDemandaComentario(@coment.Id,-1,'C')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                                        <button title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,@coment.Id,-1,'C')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                                     </div>
 
+                                    <dl class="dlist-inline small ">
+                                        <dt>Seu Voto</dt>
+                                        <dd>
+                                            @*TODO adicionar usuario logado*@
+                                            <span  id="@String.Concat("avaComentPos",coment.Id)" @(coment.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota > 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:green">+1</span>
+                                            <span  id="@String.Concat("avaComentNeg",coment.Id)" @(coment.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota < 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:red">-1</span>
+                                        </dd>
+
+                                    </dl>
+
                                 </td>
-                                <td class="text-left" width="70%" style="padding-bottom: 1em">
+                                <td class="text-left" width="55%" style="padding-bottom: 1em">
                                     <div class="s-prose js-post-body" itemprop="text">
                                         <p>@coment.Descricao</p>
                                     </div>
                                 </td>
 
-                                <td class="text-center" width="12%" style="padding-bottom: 1em;vertical-align:bottom">
+                                <td class="text-center" width="30%" style="padding-bottom: 1em;vertical-align:bottom">
 
                                     <dl class="dlist-inline small">
                                         <dd>
@@ -184,7 +234,7 @@
                                     </dl>
 
                                     <dl class="dlist-inline small">
-                                        <dt>Enviado em: &nbsp;</dt>
+                                        <dt>Enviado:</dt>
                                         @(coment.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))
                                     </dl>
 

@@ -50,6 +50,8 @@ namespace IfsParticipe.Controllers
                         {
                             dem.SituacaoList = BindSituacaoList();
                             dem.CategoriaList = BindCategoriaList();
+                            dem.CountComent = _repositoryComentario.ObterTodosComentarios().Where(c => c.IdDemanda == dem.Id).Count();
+                            dem.CountAva = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo == 'D' && a.IdDemanda == dem.Id).Sum(i => i.Nota);
                         }
 
                         return View(demandas);
@@ -89,7 +91,21 @@ namespace IfsParticipe.Controllers
                 }
                 else
                 {
+                    //avaliacoes da demanda
+                    var avalDemanda = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo == 'D' && a.IdDemanda == demandaModel.Id).ToList();
+                    demandaModel.Avaliacoes = avalDemanda;
+                    demandaModel.CountAva = avalDemanda.Sum(i => i.Nota);
+
+                    //avaliacoes dos comentarios
                     detalheVM.ComentarioList = _repositoryComentario.ObterTodosComentarios().Where(m => m.IdDemanda == Id).ToList();
+
+                    foreach (var c in detalheVM.ComentarioList)
+                    {
+                        var avalComent = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo == 'C' && a.IdComentario == c.Id).ToList();
+                        c.Avaliacoes = avalComent;
+                        c.CountAva = avalComent.Sum(i => i.Nota);
+                    }
+
                 }
 
             }
@@ -300,26 +316,53 @@ namespace IfsParticipe.Controllers
 
         }
 
-        [HttpPost]
-        public JsonResult AvaliarDemandaComentario(Avaliacao avaliacao)
+
+        [HttpGet]
+        public IActionResult RemoverDemanda(int Id)
         {
+
             try
             {
-                avaliacao.DataAtualizacao = DateTime.Now;
-                //TODO implementar usuario
-                avaliacao.IdUsuario = 123;
-                _repositoryAvaliacao.Cadastrar(avaliacao);
+                _repositoryDemanda.Excluir(Id);
+                TempData["MSG_S"] = "Demanda excluida com sucesso!";
             }
             catch (Exception e)
             {
 
+                TempData["MSG_E"] = "Ops! Tivemos um erro, tente novamente mais tarde!";
             }
 
-            avaliacao.DataAtualizacao = DateTime.Now;
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpPost]
+        public JsonResult AvaliarDemandaComentario(Avaliacao avaliacao)
+        {
             //TODO implementar usuario
+            avaliacao.DataAtualizacao = DateTime.Now;
             avaliacao.IdUsuario = 123;
-             
+            
+            try
+            {
+                _repositoryAvaliacao.Cadastrar(avaliacao);
+                if (avaliacao.Tipo == 'C')
+                    avaliacao.SomaNotas = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo =='C' && a.IdComentario == avaliacao.IdComentario).Sum(i => i.Nota);
+                else
+                    avaliacao.SomaNotas = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo == 'D' && a.IdDemanda == avaliacao.IdDemanda).Sum(i => i.Nota);
+            }
+            catch (Exception e)
+            {
+                TempData["MSG_E"] = "Ops! Tivemos um erro, tente novamente mais tarde!";
+            }
+
             return Json(avaliacao);
+
+            //if (avaliacao.Tipo == 'D')
+            //    return Json(new { redirectToUrl = Url.Action("DetalharDemanda", "Demanda", new { id = avaliacao.IdDemanda }) });
+            //else
+            //    return Json(new { redirectToUrl = Url.Action("DetalharDemanda", "Demanda", new { id = avaliacao.IdDemanda }) + "#" + avaliacao.IdComentario });
+
         }
 
 

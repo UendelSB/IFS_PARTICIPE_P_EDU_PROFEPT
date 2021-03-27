@@ -16,6 +16,10 @@ namespace IfsParticipe.Models
 
         public int Nota { get; set; }
 
+        [NotMapped]
+        public int SomaNotas { get; set; }
+
+
         public int? IdDemanda { get; set; }
 
         [ForeignKey("IdDemanda")]
@@ -29,6 +33,8 @@ namespace IfsParticipe.Models
         public char Tipo { get; set; }
 
         public DateTime DataAtualizacao { get; set; }
+
+
 
     }
 }

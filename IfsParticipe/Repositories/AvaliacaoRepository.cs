@@ -26,19 +26,35 @@ namespace IfsParticipe.Repositories
         public void Cadastrar(Avaliacao avaliacao)
         {
             //verificar se ja existe para fazer apenas a atualizacao da noda do comentatio ou da demanda
-            Avaliacao avTemp =  ObterTodasAvaliacoes().Where(m => (m.Tipo == avaliacao.Tipo) && (m.IdDemanda == avaliacao.IdDemanda || m.IdComentario == avaliacao.IdComentario) && m.IdUsuario == avaliacao.IdUsuario ).FirstOrDefault();
 
-            if(avTemp != null)
+            Avaliacao avDem;
+            Avaliacao avCom;
+
+            if(avaliacao.Tipo == 'C')
             {
-                avTemp.DataAtualizacao = avaliacao.DataAtualizacao;
-                avTemp.Nota = avaliacao.Nota;
-                Atualizar(avTemp);
+                avCom = ObterTodasAvaliacoes().Where(m => m.IdComentario == avaliacao.IdComentario && m.Tipo == 'C' && m.IdUsuario == avaliacao.IdUsuario).FirstOrDefault();
+               if (avCom != null){
+                    avCom.DataAtualizacao = avaliacao.DataAtualizacao;
+                    avCom.Nota = avaliacao.Nota;
+                    Atualizar(avCom);
+                    return;
+                }
+
             }
-            else
-            {
-             _banco.Avaliacao.Add(avaliacao);
-              _banco.SaveChanges();
-            }
+            else {
+                avDem = ObterTodasAvaliacoes().Where(m => m.IdDemanda == avaliacao.IdDemanda && m.Tipo =='D' && m.IdUsuario == avaliacao.IdUsuario).FirstOrDefault();
+                if (avDem != null)
+                {
+                    avDem.DataAtualizacao = avaliacao.DataAtualizacao;
+                    avDem.Nota = avaliacao.Nota;
+                    Atualizar(avDem);
+                    return;
+                }
+           }
+
+            _banco.Avaliacao.Add(avaliacao);
+            _banco.SaveChanges();
+
         }
 
         public Avaliacao ObterAvaliacao(int Id)

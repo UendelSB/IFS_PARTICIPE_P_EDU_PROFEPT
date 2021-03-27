@@ -27,5 +27,13 @@ namespace IfsParticipe.Models
 
         public DateTime DataAtualizacao { get; set; }
 
+        [NotMapped]
+        public int CountAva { get; set; }
+
+        [NotMapped]
+        public List<Avaliacao> Avaliacoes { get; set; }
+
+
+
     }
 }

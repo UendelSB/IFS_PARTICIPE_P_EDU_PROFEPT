@@ -32,7 +32,13 @@ namespace IfsParticipe.Repositories
 
         public void Excluir(int Id)
         {
-            _banco.Remove(ObterDemanda(Id));
+            Demanda demanda = ObterDemanda(Id);
+            List<Avaliacao> avaliacoes = _banco.Avaliacao.Where(a => a.IdDemanda == Id).ToList();
+            List<Comentario> comentarios = _banco.Comentario.Where(a => a.IdDemanda == Id).ToList();
+
+            _banco.RemoveRange(avaliacoes);
+            _banco.RemoveRange(comentarios);
+            _banco.Remove(demanda);
             _banco.SaveChanges();
         }
 

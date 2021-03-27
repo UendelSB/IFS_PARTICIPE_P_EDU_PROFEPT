@@ -137,7 +137,7 @@ namespace IfsParticipe.Controllers
         public IActionResult RemoverPDI(int Id)
         {
             //TODO permitir a exclusao logica para que as demandas nao sejam excluidas
-            PDI model = new PDI();
+
             try
             {
                _repository.Excluir(Id);
