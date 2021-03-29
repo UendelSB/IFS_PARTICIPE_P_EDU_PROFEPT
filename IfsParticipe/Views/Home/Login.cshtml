@@ -1,39 +1,38 @@
-﻿
+﻿@model Usuario
 @{
     ViewData["Title"] = "Login";
+    var msgValidE = TempData["MSG_E"];
 }
 
 <main role="main">
     <br />
     <br />
     <section class="container">
-        <aside class="col-sm-4">
-            <h3 class="subtitle-doc">
-                # Login form simple
-                <a href="#" data-html="code_login_1" class="showcode">[code]</a>
-            </h3>
-            <div id="code_login_1">
+
+        @if (msgValidE != null)
+        {
+            <p id="msgerro" class="alert alert-danger">@Html.Raw(msgValidE)</p>
+        }
+
+        <aside class="col-sm-4" style="  margin: 0 auto;float: none;margin-bottom: 10px;">
+            <h3 class="subtitle-doc"></h3>
+            <div id="code_login">
                 <div class="card">
                     <article class="card-body">
-                        <a href="/Home/CadastroCliente" class="float-right btn btn-outline-primary">Sign up</a>
-                        <h4 class="card-title mb-4 mt-1">Sign in</h4>
-                        <form>
+
+                        <h4 class="card-title mb-4 mt-1">Login</h4>
+                        <form method="post">
                             <div class="form-group">
-                                <label>Your email</label>
-                                <input name="" class="form-control" placeholder="Email" type="email">
+                                <label asp-for="Login">Usuario</label>
+                                <input asp-for="Login" class="form-control" placeholder="" type="text">
                             </div> <!-- form-group// -->
                             <div class="form-group">
-                                <a class="float-right" href="#">Forgot?</a>
-                                <label>Your password</label>
-                                <input class="form-control" placeholder="******" type="password">
+                                <label asp-for="Senha">Senha</label>
+                                <input asp-for="Senha" class="form-control" placeholder="******" type="password">
                             </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <div class="checkbox">
-                                    <label> <input type="checkbox"> Save password </label>
-                                </div> <!-- checkbox .// -->
-                            </div> <!-- form-group// -->
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block"> Login </button>
+
+                            <div class="form-group text-center">
+                                <h5 class="subtitle-doc">    <button type="submit" class="btn btn-outline-success my-2 my-sm-0 col-sm-10 "> Login </button></h5>
                             </div> <!-- form-group// -->
                         </form>
                     </article>

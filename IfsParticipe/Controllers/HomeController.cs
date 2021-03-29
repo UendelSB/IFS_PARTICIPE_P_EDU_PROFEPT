@@ -20,29 +20,34 @@ namespace IfsParticipe.Controllers
             return View();
         }
 
-        public IActionResult ContatoAcao()
-        {
-            Contato contato = new Contato
-            {
-                Nome = HttpContext.Request.Form["nome"],
-                Email = HttpContext.Request.Form["email"],
-                Texto = HttpContext.Request.Form["texto"]
-            };
 
-            ContatoEmail.EnviarContatoPorEmail(contato);
 
-            return new ContentResult() { Content = String.Format( "Dados recebidos com sucesso! <br/> Nome: {0} <br/> email: {1} <br/> texto: {2}", contato.Nome, contato.Email, contato.Texto), ContentType = "text/html" };
-        }
-
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult CarrinhoCompras()
+        [HttpPost]
+        public IActionResult Login([FromForm] Usuario usuario )
         {
+
+            if (ModelState.IsValid)
+            {
+
+                if (usuario.Login == "teste")
+                {
+                    HttpContext.Session
+                }
+                else
+                {
+                    TempData["MSG_E"] = "Usuário os senha informados incorretos!";
+                }
+            }
             return View();
         }
+
+
 
     }
 }
