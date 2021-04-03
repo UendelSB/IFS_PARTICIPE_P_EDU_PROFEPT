@@ -21,21 +21,24 @@
                     <article class="card-body">
 
                         <h4 class="card-title mb-4 mt-1">Login</h4>
-                        <form method="post">
+                        @using (Html.BeginForm(null, null, null, FormMethod.Post, false, new { @action = Url.Action("Login", "Usuario") + "#formulario" }))
+                        {
                             <div class="form-group">
-                                <label asp-for="Login">Usuario</label>
+                                <label asp-for="Login">Usuário</label>
                                 <input asp-for="Login" class="form-control" placeholder="" type="text">
+                                @Html.ValidationMessageFor(m => m.Login)
                             </div> <!-- form-group// -->
                             <div class="form-group">
                                 <label asp-for="Senha">Senha</label>
                                 <input asp-for="Senha" class="form-control" placeholder="******" type="password">
+                                @Html.ValidationMessageFor(m => m.Senha)
                             </div> <!-- form-group// -->
 
                             <div class="form-group text-center">
                                 <h5 class="subtitle-doc">    <button type="submit" class="btn btn-outline-success my-2 my-sm-0 col-sm-10 "> Login </button></h5>
                             </div> <!-- form-group// -->
-                        </form>
-                    </article>
+                        }
+                        </article>
                 </div> <!-- card.// -->
             </div> <!-- code-wrap.// -->
         </aside>

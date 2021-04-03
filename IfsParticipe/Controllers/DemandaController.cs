@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IfsParticipe.Database;
+using IfsParticipe.Libraries;
+using IfsParticipe.Libraries.Filtro;
 using IfsParticipe.Models;
 using IfsParticipe.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,25 +20,28 @@ namespace IfsParticipe.Controllers
         private IPdiRepository _repositoryPdi;
         private IComentarioRepository _repositoryComentario;
         private IAvaliacaoRepository _repositoryAvaliacao;
+        private LoginUsuario _loginUsuario;
 
 
 
-        public DemandaController(IDemandaRepository repositoryDemanda, IPdiRepository repositoryPdi, IComentarioRepository repositoryComentario, IAvaliacaoRepository repositoryAvaliacao)
+        public DemandaController(IDemandaRepository repositoryDemanda, IPdiRepository repositoryPdi, IComentarioRepository repositoryComentario, IAvaliacaoRepository repositoryAvaliacao, LoginUsuario loginUsuario)
         {
             _repositoryDemanda = repositoryDemanda;
             _repositoryPdi = repositoryPdi;
             _repositoryComentario = repositoryComentario;
             _repositoryAvaliacao = repositoryAvaliacao;
+            _loginUsuario = loginUsuario;
 
         }
 
-
+        //D=DISCENTE C= COLABORADOR
         [HttpGet]
+        [UsuarioAutorizacao("D,C")]
         public IActionResult Index()
         {
             try
             {
-                PDI pdiVigente = _repositoryPdi.ObterTodosPDIs().Where(m => DateTime.Now >= m.DataIniVig && DateTime.Now <= m.DataFimVig).FirstOrDefault();
+                PDI pdiVigente = _repositoryPdi.ObterTodosPDIs().Where(m => (DateTime.Now >= m.DataIniVig && DateTime.Now <= m.DataFimVig) && m.Situacao == 1).FirstOrDefault();
                 IEnumerable<Demanda> demandas;
 
                 if (pdiVigente != null)
@@ -54,6 +59,16 @@ namespace IfsParticipe.Controllers
                             dem.CountAva = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo == 'D' && a.IdDemanda == dem.Id).Sum(i => i.Nota);
                         }
 
+                        Usuario usu = _loginUsuario.GetUsuario();
+                        if(usu.Tipo == 'C')
+                        {//new { d.CountAva, d.CountComent }
+                            demandas = demandas.OrderByDescending(d => d.CountAva).ThenByDescending(d => d.CountComent).ToList();
+                        }
+                        else
+                        {
+                            demandas = demandas.OrderByDescending(d => d.DataAtualizacao).ThenByDescending(d => d.DataAtualizacao.TimeOfDay).ToList();
+                        }
+
                         return View(demandas);
                     }
                     else
@@ -64,6 +79,10 @@ namespace IfsParticipe.Controllers
                 }
                 else
                 {
+                    var msgValidPeri = TempData["MSG_E"];
+                    if (msgValidPeri != null)
+                        TempData["MSG_E"] = msgValidPeri;
+                    else
                     TempData["MSG_E"] = "Nenhum PDI vigente foi encontrado!";
                 }
             }catch (Exception e)
@@ -76,6 +95,7 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpGet]
+        [UsuarioAutorizacao("D,C")]
         public ActionResult DetalharDemanda(int Id)
         {
             DetalheDemandaViewModel detalheVM = new DetalheDemandaViewModel();
@@ -126,11 +146,13 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpGet]
+        [UsuarioAutorizacao("D")]
         public ActionResult NovaDemanda()
         {
 
             PDI pdiVigente = _repositoryPdi.ObterTodosPDIs().Where(m => (DateTime.Now >= m.DataIniVig && DateTime.Now <= m.DataFimVig) &&
-                                                                        (DateTime.Now >= m.DataIniRecDem && DateTime.Now <= m.DataFimVig)).FirstOrDefault();
+                                                                        (DateTime.Now >= m.DataIniRecDem && DateTime.Now <= m.DataFimVig) &&
+                                                                         m.Situacao == 1).FirstOrDefault();
 
             if (pdiVigente != null)
             {
@@ -157,6 +179,7 @@ namespace IfsParticipe.Controllers
 
 
         [HttpPost]
+        [UsuarioAutorizacao("D")]
         public IActionResult CadastrarDemanda([FromForm]Demanda demanda)
         {
             try
@@ -168,6 +191,7 @@ namespace IfsParticipe.Controllers
                 {
                     demanda.DataCadastro = DateTime.Now;
                     demanda.DataAtualizacao = DateTime.Now;
+                    demanda.IdUsuario = _loginUsuario.GetUsuario().Id;
                     _repositoryDemanda.Cadastrar(demanda);
                     TempData["MSG_S"] = "Demanda enviada com sucesso!";
                     return RedirectToAction(nameof(Index));
@@ -208,6 +232,7 @@ namespace IfsParticipe.Controllers
 
 
         [HttpPost]
+        [UsuarioAutorizacao("D,C")]
         public IActionResult AlterarDemanda([FromForm]Demanda demanda)
         {
 
@@ -216,8 +241,7 @@ namespace IfsParticipe.Controllers
                 demanda.CategoriaList = BindCategoriaList();
                 demanda.SituacaoList = BindSituacaoList();
                 demanda.DataAtualizacao = DateTime.Now;
-                //TODO implementar registro usuario
-                demanda.IdUsuario = 123;
+                demanda.IdUsuario = _loginUsuario.GetUsuario().Id; 
 
                 if (ModelState.IsValid)
                 {
@@ -237,6 +261,7 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpGet]
+        [UsuarioAutorizacao("D,C")]
         public IActionResult AlterarDemanda(int Id)
         {
 
@@ -264,6 +289,7 @@ namespace IfsParticipe.Controllers
 
 
         [HttpPost]
+        [UsuarioAutorizacao("D")]
         public IActionResult CadastrarComentario([FromForm] DetalheDemandaViewModel demandaCom)
         {
 
@@ -271,8 +297,7 @@ namespace IfsParticipe.Controllers
             {
                 demandaCom.Comentario.DataAtualizacao = DateTime.Now;
                 demandaCom.Comentario.DataCadastro = DateTime.Now;
-                //TODO implementar usuario
-                demandaCom.Comentario.IdUsuario = 123;
+                demandaCom.Comentario.IdUsuario = _loginUsuario.GetUsuario().Id; ;
              
                 if (ModelState.IsValid)
                 {
@@ -296,6 +321,7 @@ namespace IfsParticipe.Controllers
 
         
         [HttpGet]
+        [UsuarioAutorizacao("D,C")]
         public IActionResult RemoverComentario(int Id)
         {
             //TODO permitir a exclusao logica para que as demandas nao sejam excluidas
@@ -318,6 +344,7 @@ namespace IfsParticipe.Controllers
 
 
         [HttpGet]
+        [UsuarioAutorizacao("D,C")]
         public IActionResult RemoverDemanda(int Id)
         {
 
@@ -337,15 +364,17 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpPost]
+        [UsuarioAutorizacao("D")]
         public JsonResult AvaliarDemandaComentario(Avaliacao avaliacao)
         {
             //TODO implementar usuario
             avaliacao.DataAtualizacao = DateTime.Now;
-            avaliacao.IdUsuario = 123;
+            avaliacao.IdUsuario = _loginUsuario.GetUsuario().Id; 
             
             try
             {
                 _repositoryAvaliacao.Cadastrar(avaliacao);
+
                 if (avaliacao.Tipo == 'C')
                     avaliacao.SomaNotas = _repositoryAvaliacao.ObterTodasAvaliacoes().Where(a => a.Tipo =='C' && a.IdComentario == avaliacao.IdComentario).Sum(i => i.Nota);
                 else
@@ -357,11 +386,6 @@ namespace IfsParticipe.Controllers
             }
 
             return Json(avaliacao);
-
-            //if (avaliacao.Tipo == 'D')
-            //    return Json(new { redirectToUrl = Url.Action("DetalharDemanda", "Demanda", new { id = avaliacao.IdDemanda }) });
-            //else
-            //    return Json(new { redirectToUrl = Url.Action("DetalharDemanda", "Demanda", new { id = avaliacao.IdDemanda }) + "#" + avaliacao.IdComentario });
 
         }
 

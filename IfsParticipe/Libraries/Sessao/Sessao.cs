@@ -8,7 +8,7 @@ namespace IfsParticipe.Libraries.Sessao
 {
     public class Sessao
     {
-        IHttpContextAccessor _context;
+         IHttpContextAccessor _context;
 
         public Sessao(IHttpContextAccessor context) {
             _context = context;

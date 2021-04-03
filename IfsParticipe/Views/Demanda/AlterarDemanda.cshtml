@@ -1,4 +1,15 @@
-﻿@model Demanda
+﻿@using Microsoft.AspNetCore.Http
+@using IfsParticipe.Libraries
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    LoginUsuario _loginUsuario = (LoginUsuario)HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(LoginUsuario));
+    Usuario usuario = _loginUsuario.GetUsuario();
+
+}
+
+@model Demanda
 @{
     ViewData["Title"] = "AlterarDemanda";
 }
@@ -30,7 +41,16 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label asp-for="Titulo">Título</label>
-                                        <input type="text" asp-for="Titulo" class="form-control" placeholder="">
+                                        @if (usuario.Tipo == 'C')
+                                        {
+                                            <input readonly="readonly" type="text" asp-for="Titulo" class="form-control" placeholder="" />
+                                        }
+                                        else
+                                        {
+                                            <input  type="text" asp-for="Titulo" class="form-control" placeholder="" />
+                                        }
+
+                                        @*@(usuario.Tipo == 'C' ? "readonly" : " " )*@
                                     </div> <!-- form-group end.// -->
                                 </div> <!-- form-row.// -->
                                 <div class="form-group">
@@ -41,12 +61,29 @@
 
                                 <div class="form-group">
                                     <label asp-for="Descricao">Descrição</label>
-                                    <textarea class="form-control" asp-for="Descricao" rows="3"></textarea>
+
+                                    @if (usuario.Tipo == 'C')
+                                    {
+                                        <textarea asp-for="Descricao" readonly="readonly" class="form-control" rows="3"></textarea>
+                                    }
+                                    else
+                                    {
+                                        <textarea asp-for="Descricao"  class="form-control" rows="3"></textarea>
+                                    }
+
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Situacao">Situação</label>
-                                    @Html.DropDownListFor(m => m.Situacao, Model.SituacaoList, "Selecione", new { @class = "form-control" })
 
+                                    @if (usuario.Tipo == 'C')
+                                    {
+
+                                        <label asp-for="Situacao">Situação</label>
+                                        @Html.DropDownListFor(m => m.Situacao, Model.SituacaoList, "Selecione", new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" asp-for="Situacao" />
+                                    }
                                 </div>
 
                                 <button type="submit" class="btn btn-outline-success btn-block">Salvar</button>
@@ -54,7 +91,7 @@
 
 
                         </article> <!-- card-body end .// -->
-                        <div class="border-top card-body text-center"> <a href='@Url.Action("DetalharDemanda", "Demanda", new { id = Model.Id })' >Cancelar</a></div>
+                        <div class="border-top card-body text-center"> <a href='@Url.Action("DetalharDemanda", "Demanda", new { id = Model.Id })'>Cancelar</a></div>
                     </div> <!-- card.// -->
 
 

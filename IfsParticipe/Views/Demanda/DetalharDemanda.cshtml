@@ -1,4 +1,15 @@
-﻿@model DetalheDemandaViewModel
+﻿@using Microsoft.AspNetCore.Http
+@using IfsParticipe.Libraries
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    LoginUsuario _loginUsuario = (LoginUsuario)HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(LoginUsuario));
+    Usuario usuario = _loginUsuario.GetUsuario();
+
+}
+
+@model DetalheDemandaViewModel
 
 @{
     ViewData["Title"] = "DetalharDemanda";
@@ -55,14 +66,14 @@
 
 
                     if (response.nota > 0) {
-               
+                    
                         spanAvaComentPos.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:green');
                         spanAvaComentNeg.hide();
 
                     } else {
-                        spanAvaComentPos.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:red');
-                        spanAvaComentNeg.hide();
-                       
+                        spanAvaComentNeg.attr('style', 'display:block !important;font-family:fantasy;font-size:15px;color:red');
+                        spanAvaComentPos.hide();
+
                     }
                 }
             }
@@ -103,7 +114,7 @@
         }
 
         <div id="question-header" class="grid sm:fd-column">
-            <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a  href='@Url.Action("DetalharDemanda", "Demanda",new { id = Model.Demanda.Id })' class="question-hyperlink" style="word-break: break-all">@Model.Demanda.Titulo</a></h3>
+            <h3 itemprop="name" class="fs-headline1 ow-break-word mb8 grid--cell fl1"><a href='@Url.Action("DetalharDemanda", "Demanda", new { id = Model.Demanda.Id })' class="question-hyperlink" style="word-break: break-all">@Model.Demanda.Titulo</a></h3>
         </div>
 
         <div class="card">
@@ -112,22 +123,22 @@
 
                 <tbody>
 
-                    <tr style="border: 1px solid rgba(0,0,0,.125)" >
+                    <tr style="border: 1px solid rgba(0,0,0,.125)">
                         <td class="text-center" style="padding-bottom: 1em;width:15%;vertical-align:middle">
 
                             <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                <button title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,'',1,'D')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+               <button @(usuario.Tipo == 'C' || usuario.Id == Model.Demanda.IdUsuario ? "disabled" : " ")  title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,'',1,'D')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
-                                <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" > <span id="@String.Concat("count",Model.Demanda.Id)"> @Model.Demanda.CountAva</span></div>
+                                <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount"> <span id="@String.Concat("count",Model.Demanda.Id)"> @Model.Demanda.CountAva</span></div>
 
-                                <button  title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,'',-1,'D')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+               <button @(usuario.Tipo == 'C' || usuario.Id == Model.Demanda.IdUsuario ? "disabled" : " ")  title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,'',-1,'D')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                             </div>
                             <dl class="dlist-inline small ">
                                 <dt>Seu Voto</dt>
                                 <dd>
-                                    @*TODO adicionar usuario logado*@ 
-                                    <span id="@String.Concat("avaDemPos",Model.Demanda.Id)" @(Model.Demanda.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota >0  ).FirstOrDefault() == null ? "hidden" : " ")  style="font-family:fantasy;font-size:15px;color:green">+1</span>
-                                    <span id="@String.Concat("avaDemNeg",Model.Demanda.Id)" @(Model.Demanda.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota <0  ).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:red">-1</span> 
+                                    @*TODO adicionar usuario logado*@
+                                    <span id="@String.Concat("avaDemPos",Model.Demanda.Id)" @(Model.Demanda.Avaliacoes.Where(a => a.IdUsuario == usuario.Id && a.Nota > 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:green">+1</span>
+                                    <span id="@String.Concat("avaDemNeg",Model.Demanda.Id)" @(Model.Demanda.Avaliacoes.Where(a => a.IdUsuario == usuario.Id  && a.Nota < 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:red">-1</span>
                                 </dd>
 
                             </dl>
@@ -156,17 +167,20 @@
                         </td>
 
                         <td class="text-center" width="20%" style="padding-bottom: 1em;vertical-align:bottom">
-
+                            @if (Model.Demanda.IdUsuario == usuario.Id || usuario.Tipo =='C')
+                            {
                             <dl class="dlist-inline small">
                                 <dd>
-                                    <a title="Alterar" href='@Url.Action("AlterarDemanda", "Demanda",new { id = Model.Demanda.Id})' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+                                    <a title="Alterar" href='@Url.Action("AlterarDemanda", "Demanda", new { id = Model.Demanda.Id })' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
                                 </dd>
 
                                 <dd>
-                                    <a title="Remover" href='@Url.Action("RemoverDemanda", "Demanda",new { id = Model.Demanda.Id})' class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
+                                    <a title="Remover" href='@Url.Action("RemoverDemanda", "Demanda", new { id = Model.Demanda.Id })' class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
 
                                 </dd>
                             </dl>
+                            }
+
                             <dl class="dlist-inline small">
                                 <dt>Atual. Em: </dt>
                                 <dd> @(Model.Demanda.DataAtualizacao.ToString("dd/MM/yyyy HH:mm:ss"))</dd>
@@ -185,10 +199,13 @@
             <div class="card">
                 <table class="table-responsive-sm table-hover shopping-cart-wrap" style="table-layout: fixed;word-break: break-word">
                     <thead class="text-muted">
-                        <tr >
+                        <tr>
                             <th scope="col" width="15%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle;text-align:right;word-break: normal">Comentários</th>
                             <th scope="col" width="55%" style="border-bottom: 2px solid #E1E7E3;vertical-align:middle">
+                           @if (usuario.Tipo != 'C')
+                           {
                                 <input type="button" value="Novo" style="margin:.7rem!important" class="btn btn-outline-success my-2 my-sm-0" onclick="exibirFormComentario()" />
+                           }
                             </th>
                             <th scope="col" width="30%" style="border-bottom: 2px solid #E1E7E3"></th>
                         </tr>
@@ -200,19 +217,19 @@
                                 <td class="text-center" width="15%" style="padding-bottom: 1em">
 
                                     <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" data-post-id="40333689">
-                                        <button title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,@coment.Id,1,'C')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
+                   <button @(usuario.Tipo == 'C' || usuario.Id == coment.IdUsuario ? "disabled" : " ")  title="Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,@coment.Id,1,'C')" class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Up vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-rnzv4qln"><svg aria-hidden="true" class="m0 svg-icon iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"></path></svg></button>
 
                                         <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount"><span id="@String.Concat("count",coment.Id)">  @coment.CountAva</span></div>
 
-                                        <button title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,@coment.Id,-1,'C')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
+                   <button @(usuario.Tipo == 'C'  || usuario.Id == coment.IdUsuario ? "disabled" : " ")  title="Não Gostei" onclick="avaliarDemandaComentario(@Model.Demanda.Id,@coment.Id,-1,'C')" class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" data-controller="s-tooltip" data-s-tooltip-placement="right" aria-pressed="false" aria-label="Down vote" data-selected-classes="fc-theme-primary" aria-describedby="--stacks-s-tooltip-e5im5oro"><svg aria-hidden="true" class="m0 svg-icon iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"></path></svg></button>
                                     </div>
 
                                     <dl class="dlist-inline small ">
                                         <dt>Seu Voto</dt>
                                         <dd>
                                             @*TODO adicionar usuario logado*@
-                                            <span  id="@String.Concat("avaComentPos",coment.Id)" @(coment.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota > 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:green">+1</span>
-                                            <span  id="@String.Concat("avaComentNeg",coment.Id)" @(coment.Avaliacoes.Where(a => a.IdUsuario == 123 && a.Nota < 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:red">-1</span>
+                                            <span id="@String.Concat("avaComentPos",coment.Id)" @(coment.Avaliacoes.Where(a => a.IdUsuario == usuario.Id  && a.Nota > 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:green">+1</span>
+                                            <span id="@String.Concat("avaComentNeg",coment.Id)" @(coment.Avaliacoes.Where(a => a.IdUsuario == usuario.Id  && a.Nota < 0).FirstOrDefault() == null ? "hidden" : " ") style="font-family:fantasy;font-size:15px;color:red">-1</span>
                                         </dd>
 
                                     </dl>
@@ -225,13 +242,15 @@
                                 </td>
 
                                 <td class="text-center" width="30%" style="padding-bottom: 1em;vertical-align:bottom">
-
+                                    @if (coment.IdUsuario == usuario.Id || usuario.Tipo == 'C')
+                                    {
                                     <dl class="dlist-inline small">
                                         <dd>
-                                            <a title="Remover" href='@Url.Action("RemoverComentario", "Demanda",new { id = coment.Id})' class="btn btn-outline-danger" data-toggle="tooltip"
+                                            <a title="Remover" href='@Url.Action("RemoverComentario", "Demanda", new { id = coment.Id })' class="btn btn-outline-danger" data-toggle="tooltip"
                                                data-original-title="Save to Wishlist"><i class="fa fa-eraser"></i></a>
                                         </dd>
                                     </dl>
+                                    }
 
                                     <dl class="dlist-inline small">
                                         <dt>Enviado:</dt>
@@ -244,30 +263,30 @@
                             </tr>
 
                         }
-                        </tbody>
+                    </tbody>
                 </table>
             </div> <!-- card.// -->
         </div> <!-- code-wrap.// -->
 
 
 
-        <div id="formComentario"  @(Model.Comentario == null ? "hidden" : " ") class="card">
+        <div id="formComentario" @(Model.Comentario == null ? "hidden" : " ") class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Novo Comentário</h4>
                 @using (Html.BeginForm(null, null, null, FormMethod.Post, false, new { @action = Url.Action("CadastrarComentario", "Demanda") + "#formulario" }))
                 {
-                    <input type="hidden" value="@Model.Demanda.Id"  asp-for="Comentario.IdDemanda" />
+                    <input type="hidden" value="@Model.Demanda.Id" asp-for="Comentario.IdDemanda" />
                     <div class="form-group">
                         <textarea asp-for="Comentario.Descricao" class="form-control" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 73px;"></textarea>
                     </div>
 
                     @if (Model.Comentario != null)
                     {
-                    <div  class="validation-summary-errors" data-valmsg-summary="true">
-                        <ul>
-                            <li>Campo comentário é obrigatório!</li>
-                        </ul>
-                    </div>
+                        <div class="validation-summary-errors" data-valmsg-summary="true">
+                            <ul>
+                                <li>Campo comentário é obrigatório!</li>
+                            </ul>
+                        </div>
                     }
 
                     <button type="submit" class="btn btn-outline-success btn-block">Enviar</button>

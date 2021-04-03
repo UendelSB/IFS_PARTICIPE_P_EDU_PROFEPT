@@ -23,5 +23,7 @@ namespace IfsParticipe.Database
 
         public DbSet<Avaliacao> Avaliacao { get; set; }
 
+        public DbSet<Usuario> Usuario { get; set; }
+
     }
 }

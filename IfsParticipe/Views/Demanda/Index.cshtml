@@ -1,9 +1,21 @@
-﻿@model IEnumerable<Demanda>
+﻿@using Microsoft.AspNetCore.Http
+@using IfsParticipe.Libraries
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    LoginUsuario _loginUsuario = (LoginUsuario)HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(LoginUsuario));
+    Usuario usuario = _loginUsuario.GetUsuario();
+
+}
+
+@model IEnumerable<Demanda>
 @{
     ViewData["Title"] = "Index";
     var msgValidS = TempData["MSG_S"];
     var msgValidE = TempData["MSG_E"];
 }
+
 
 
 
@@ -22,21 +34,23 @@
             <p id="msgerro" class="alert alert-danger">@Html.Raw(msgValidE)</p>
         }
 
-            <h2 class="title-doc">
-                Demandas da Comunidade - PDI IFS VIGENTE
+        <h2 class="title-doc">
+            Demandas da Comunidade - PDI IFS VIGENTE
 
-                    @if (Model != null) {
-                        @(String.Format("{0} {1} {2}", Model.FirstOrDefault().Pdi.DataIniVig == null ? "-" : Model.FirstOrDefault().Pdi.DataIniVig.Value.ToString("yyyy"), " a ", Model.FirstOrDefault().Pdi.DataFimVig == null ? " - " : Model.FirstOrDefault().Pdi.DataFimVig.Value.ToString("yyyy")))
-                    }
+            @if (Model != null)
+            {
+                @(String.Format("{0} {1} {2}", Model.FirstOrDefault().Pdi.DataIniVig == null ? "-" : Model.FirstOrDefault().Pdi.DataIniVig.Value.ToString("yyyy"), " a ", Model.FirstOrDefault().Pdi.DataFimVig == null ? " - " : Model.FirstOrDefault().Pdi.DataFimVig.Value.ToString("yyyy")))
+            }
 
-            </h2>
-      
+        </h2>
+
 
         <h4 class="subtitle-doc">
-
-            <input type="button" value="Nova Demanda" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("NovaDemanda", "Demanda")'" />
-
-        </h4>
+            @if (usuario.Tipo != 'C')
+            {
+                <input type="button" value="Nova Demanda" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("NovaDemanda", "Demanda")'" />
+            }
+            </h4>
         <br />
         <div id="code_cart">
 
@@ -63,10 +77,10 @@
 
                                             <br />
                                             <dl class="dlist-inline small">
-                                            <dd><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})'><i class="far fa-comment"></i> @dem.CountComent <span class="sr-only">(current)</span></a></dd>
+                                                <dd><a href='@Url.Action("DetalharDemanda", "Demanda",new { id = dem.Id})'><i class="far fa-comment"></i> @dem.CountComent <span class="sr-only">(current)</span></a></dd>
                                             </dl>
 
-                                            
+
 
                                         </div>
 

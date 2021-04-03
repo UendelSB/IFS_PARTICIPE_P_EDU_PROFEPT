@@ -1,9 +1,21 @@
-﻿@model List<PDI>
+﻿@using Microsoft.AspNetCore.Http
+@using IfsParticipe.Libraries
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    LoginUsuario _loginUsuario = (LoginUsuario)HttpContextAccessor.HttpContext.RequestServices.GetService(typeof(LoginUsuario));
+    Usuario usuario = _loginUsuario.GetUsuario();
+
+}
+
+@model List<PDI>
 @{
     ViewData["Title"] = "Index";
     var msgValidS = TempData["MSG_S"];
     var msgValidE = TempData["MSG_E"];
 }
+
 
 
 
@@ -27,7 +39,9 @@
 
         <h4 class="subtitle-doc">
 
+            @if (usuario.Tipo == 'C') {
             <input type="button" value="Novo PDI" class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='@Url.Action("CadastroPDI", "Pdi")'" />
+            }
 
         </h4>
         <div id="code_cart">
@@ -87,18 +101,20 @@
                                 </td>
 
                                 <td class="text-center" style="padding-bottom: 1em;width:20%;vertical-align:middle">
+                                    @if (usuario.Tipo == 'C')
+                                    {
+                                        <dl class="dlist-inline small">
+                                            <dd>
+                                                <a title="Alterar" href='@Url.Action("AlterarPDI", "Pdi", new { id = itemPdi.Id })' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+                                            </dd>
 
-                                    <dl class="dlist-inline small">
-                                        <dd>
-                                            <a title="Alterar" href='@Url.Action("AlterarPDI", "Pdi",new { id = itemPdi.Id})' class="btn btn-outline-success" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                        </dd>
+                                            <dd>
+                                                <a title="Remover" href='@Url.Action("RemoverPDI", "Pdi", new { id = itemPdi.Id })' class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
+                                            </dd>
+                                        </dl>
+                                    }
 
-                                        <dd>
-                                            <a title="Remover" href='@Url.Action("RemoverPDI", "Pdi",new { id = itemPdi.Id})' class="btn btn-outline-danger" data-toggle="tooltip"><i class="fa fa-eraser"></i></a>
-                                        </dd>
-                                    </dl>
-
-                                </td>
+                                    </td>
 
                             </tr>
                         }

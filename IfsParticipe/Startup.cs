@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using IfsParticipe.Repositories;
 using IfsParticipe.Repositories.Interfaces;
 using IfsParticipe.Libraries.Sessao;
+using IfsParticipe.Libraries;
 
 namespace IfsParticipe
 {
@@ -31,15 +32,18 @@ namespace IfsParticipe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IPdiRepository, PdiRepository>();
             services.AddScoped<IDemandaRepository, DemandaRepository>();
             services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
             services.AddScoped<IComentarioRepository, ComentarioRepository>();
+  
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
@@ -50,6 +54,7 @@ namespace IfsParticipe
                 //configura aqui o tempo da sessao
             });
             services.AddScoped<Sessao>();
+            services.AddScoped<LoginUsuario>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             string connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IfsParticipeDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";

@@ -10,20 +10,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using IfsParticipe.Database;
 using IfsParticipe.Repositories;
 using IfsParticipe.Repositories.Interfaces;
+using IfsParticipe.Libraries.Filtro;
+using IfsParticipe.Libraries;
 
 namespace IfsParticipe.Controllers
 {
     public class PdiController : Controller
     {
         private IPdiRepository _repository;
+        private LoginUsuario _loginUsuario;
 
-        public PdiController(IPdiRepository repository)
+        public PdiController(IPdiRepository repository,LoginUsuario loginUsuario)
         {
             _repository = repository;
+            _loginUsuario = loginUsuario;
         }
 
 
         [HttpGet]
+        [UsuarioAutorizacao("D,C")]
         public IActionResult Index()
         {
 
@@ -38,6 +43,7 @@ namespace IfsParticipe.Controllers
 
 
         [HttpGet]
+        [UsuarioAutorizacao("C")]
         public IActionResult CadastroPDI()
         {
             PDI model = new PDI{SituacaoList = BindSituacaoList() };
@@ -55,6 +61,7 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpPost]
+        [UsuarioAutorizacao("C")]
         public IActionResult CadastrarPDI([FromForm]PDI pdi)
         {
             try {
@@ -62,7 +69,7 @@ namespace IfsParticipe.Controllers
                 pdi.SituacaoList = BindSituacaoList();
                 pdi.DataCadastro = DateTime.Now;
                 pdi.DataAtualizacao = DateTime.Now;
-                pdi.IdUsuario = 123; 
+                pdi.IdUsuario = _loginUsuario.GetUsuario().Id; 
 
                if(ModelState.IsValid){
 
@@ -82,6 +89,7 @@ namespace IfsParticipe.Controllers
 
 
         [HttpPost]
+        [UsuarioAutorizacao("C")]
         public IActionResult AlterarPDI([FromForm]PDI pdi)
         {
 
@@ -90,7 +98,7 @@ namespace IfsParticipe.Controllers
 
                 pdi.SituacaoList = BindSituacaoList();
                 pdi.DataAtualizacao = DateTime.Now;
-                pdi.IdUsuario = 123;
+                pdi.IdUsuario = _loginUsuario.GetUsuario().Id; ;
 
                 if (ModelState.IsValid)
                 {
@@ -110,6 +118,7 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpGet]
+        [UsuarioAutorizacao("C")]
         public IActionResult AlterarPDI(int Id)
         {
             PDI model = new PDI();
@@ -134,6 +143,7 @@ namespace IfsParticipe.Controllers
         }
 
         [HttpGet]
+        [UsuarioAutorizacao("C")]
         public IActionResult RemoverPDI(int Id)
         {
             //TODO permitir a exclusao logica para que as demandas nao sejam excluidas

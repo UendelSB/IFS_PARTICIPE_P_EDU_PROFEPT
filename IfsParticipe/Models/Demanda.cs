@@ -43,7 +43,6 @@ namespace IfsParticipe.Models
         [MaxLength(500, ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E003")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E005")]
         public int? Situacao { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E005")]
