@@ -93,8 +93,7 @@ namespace IfsParticipe.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<int?>("Situacao")
-                        .IsRequired();
+                    b.Property<int?>("Situacao");
 
                     b.Property<string>("Titulo")
                         .IsRequired()

@@ -72,7 +72,9 @@ namespace IfsParticipe.Controllers
               
                 } catch(Exception e)
                 {
-                   TempData["MSG_E"] = "Ops! Tivemos um erro, tente novamente mais tarde!";
+
+                    TempData["MSG_E"] = e.Message;
+                        //"Ops! Tivemos um erro, tente novamente mais tarde!";
                 }
 
             }

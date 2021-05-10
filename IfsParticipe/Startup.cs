@@ -57,9 +57,13 @@ namespace IfsParticipe
             services.AddScoped<LoginUsuario>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            string connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IfsParticipeDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            services.AddDbContext<IfsParticipeContext>(options => options.UseSqlServer(connection));
+            //string connection = "Data Source=REIADMNTB187;Initial Catalog=IfsParticipeDB;User ID=appIfsParticipe; Password=app2583;Connect Timeout=3000; MultipleActiveResultSets=True";
+            //(localdb)\\
+            services .AddDbContext<IfsParticipeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnDB")));
+            //services.Configure<IISOptions>(options =>
+            //{
+            //  //  options.AutomaticAuthentication = false;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +79,7 @@ namespace IfsParticipe
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
