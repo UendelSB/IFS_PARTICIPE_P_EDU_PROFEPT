@@ -3,4 +3,7 @@
   <parameter name="IIS Web Application Name" description="" value="IfsParticipe" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\DESENV_PESSOAL\\PRODUTO_EDUCACIONAL\\PRODUTO_EDUCACIONAL_PROFEPT\\IfsParticipe\\obj\\Release\\netcoreapp2\.2\\PubTmp\\Out\\$" />
   </parameter>
+  <parameter name="IfsParticipe.Database.IfsParticipeContext" description="" value="Data Source=tcp:ifsparticipedbserver.database.windows.net,1433;Initial Catalog=IfsParticipe;User Id=uendel.batista@ifsparticipedbserver;Password=mond2583*" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\DESENV_PESSOAL\\PRODUTO_EDUCACIONAL\\PRODUTO_EDUCACIONAL_PROFEPT\\IfsParticipe\\obj\\Release\\netcoreapp2\.2\\PubTmp\\EFSQLScripts\\IfsParticipe\.Database\.IfsParticipeContext\.sql$" />
+  </parameter>
 </parameters>

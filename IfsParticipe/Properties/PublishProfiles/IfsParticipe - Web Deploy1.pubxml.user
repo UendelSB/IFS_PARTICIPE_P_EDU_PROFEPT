@@ -8,4 +8,14 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAdO6wurQGZEeuE83UyAR3/wAAAAACAAAAAAADZgAAwAAAABAAAACa+vCKyoqKSPVicmM+73EWAAAAAASAAACgAAAAEAAAADbmjaspiIi/Hdcl8/JaQtmAAAAAhogeW+sjXA0NsAu4PnVF4Wf/hGSWJf3hQeaL9WqeejMa2g4uLJA25Xx+1uTJTXEVhRsWrM//a+l0+dLDXft0ZoS9ugy+bXYwVnzSs8ZbG5+0CGky/V3Iuv3JQoaBtCedA8gW6bSV3M0Q9DwrATZIG5S7/L9Y9530nqYoFesCgW8UAAAAcaeYRnUefYbBmaXTecll3AznQqE=</EncryptedPassword>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="ConnDB">
+      <Value>Data Source=tcp:ifsparticipedbserver.database.windows.net,1433%3bInitial Catalog=IfsParticipe%3bUser Id=uendel.batista%40ifsparticipedbserver%3bPassword=app2583%2a</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="IfsParticipe.Database.IfsParticipeContext">
+      <Value>Data Source=tcp:ifsparticipedbserver.database.windows.net,1433%3bInitial Catalog=IfsParticipe%3bUser Id=uendel.batista%40ifsparticipedbserver%3bPassword=app2583%2a</Value>
+    </EFMigrations>
+  </ItemGroup>
 </Project>
