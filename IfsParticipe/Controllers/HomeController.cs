@@ -32,6 +32,10 @@ namespace IfsParticipe.Controllers
         }
 
 
+        public IActionResult ResultadoSorteio()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Login()
