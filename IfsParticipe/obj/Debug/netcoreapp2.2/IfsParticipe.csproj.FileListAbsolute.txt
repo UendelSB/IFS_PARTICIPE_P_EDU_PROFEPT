@@ -96,5 +96,5 @@ C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\o
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.dll
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.pdb
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csproj.CopyComplete
-C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csprojAssemblyReference.cache
 C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\Razor\Views\Home\ResultadoSorteio.g.cshtml.cs
+C:\DESENV_PESSOAL\PRODUTO_EDUCACIONAL\PRODUTO_EDUCACIONAL_PROFEPT\IfsParticipe\obj\Debug\netcoreapp2.2\IfsParticipe.csprojAssemblyReference.cache
